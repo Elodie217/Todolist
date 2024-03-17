@@ -8,12 +8,11 @@
 
 
     if (isset($_POST)) {
+        $data = file_get_contents("php://input");
+        $user = (json_decode($data, true));
+
+
         if (isset($user['nom']) && !empty($user['nom']) && isset($user['prenom']) && !empty($user['prenom']) && isset($user['email']) && !empty($user['email']) && isset($user['password']) && !empty($user['password']) && isset($user['password2']) && !empty($user['password2'])) {
-
-
-
-            $data = file_get_contents("php://input");
-            $user = (json_decode($data, true));
 
 
             $dbConnexion = new DbConnexion();

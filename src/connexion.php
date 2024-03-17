@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../autoload.php';
+require_once __DIR__ . '/../config.php';
+
 
 use DbConnexion\DbConnexion;
 use User\User;
@@ -11,10 +13,12 @@ use UserManager\UserManager;
 session_start();
 
 
+
 if (isset($_POST)) {
+    $data = file_get_contents("php://input");
+    $user = (json_decode($data, true));
+
     if (isset($user['emailConnexion']) && !empty($user['emailConnexion']) && isset($user['passwordConnexion']) && !empty($user['passwordConnexion'])) {
-        $data = file_get_contents("php://input");
-        $user = (json_decode($data, true));
 
 
         $dbConnexion = new DbConnexion();
@@ -26,14 +30,16 @@ if (isset($_POST)) {
             header('location:../index.php?erreur=' . ERREUR_EMAIL);
         }
 
-        $password = password_hash($user["passwordConnexion"], PASSWORD_DEFAULT);
 
 
-        if ($userManager->login($email, $password)) {
-            echo "success";
+        if ($userManager->login($email, $user["passwordConnexion"])) {
+            // echo "success";
             // faire une session avec l'id de l'utilisateur
-            $_SESSION['connecté'] = $email;
-            header('location:../index.php?success=' . CONNEXION_REUSSITE);
+            // $_SESSION['connecté'] = $email;
+            header('Content-Type: application/json');
+            // echo 'location:../index.php?success=' . CONNEXION_REUSSITE;
+            $data = json_encode(['connexion' => CONNEXION_REUSSITE]);
+            // echo $data;
         } else {
             echo "didn't work";
             header('location:../index.php?erreur=' . ERREUR_CONNEXION);

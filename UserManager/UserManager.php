@@ -3,6 +3,7 @@
 namespace UserManager;
 
 use DbConnexion\DbConnexion;
+use PDO;
 use User\User;
 
 class UserManager
@@ -40,17 +41,17 @@ class UserManager
 
     public function login(string $email, string $password)
     {
-        try {
-            $stmt = $this->pdo->query("SELECT * FROM user WHERE email_user = '$email'");
-        } catch (\PDOException $e) {
-            var_dump($e);
-        }
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $user = new User($row);
-        }
 
-        if (password_verify($user->getMDP(), $password)) {
-            return $stmt->rowCount() == 1;
+        $sql = "SELECT * FROM tdl_user WHERE EMAIL = :email";
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(':email', $email);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
+        $user = $statement->fetch();
+
+        if (password_verify($password, $user->getMot_de_passe())) {
+            return $statement->rowCount() == 1;
         }
     }
 }

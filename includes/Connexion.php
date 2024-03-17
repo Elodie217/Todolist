@@ -8,14 +8,20 @@
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="#" method="POST">
+            <div class="space-y-6">
                 <div>
                     <label for="emailConnexion" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
                     <div class="mt-2">
                         <input id="emailConnexion" name="emailConnexion" type="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 indent-2">
                     </div>
                 </div>
-                <div class="emailIncorrectConnexion text-red-700"></div>
+                <div class="emailIncorrectConnexion text-red-700">
+                    <?php if (!empty($_GET['erreur'])) {
+                        if ($_GET['erreur'] == 1) {
+                            echo ("Email incorrect");
+                        }
+                    }; ?>
+                </div>
 
 
                 <div>
@@ -29,13 +35,22 @@
                         <input id="passwordConnexion" name="passwordConnexion" type="password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 indent-2">
                     </div>
                 </div>
-                <div class="champVideConnexion text-red-700"></div>
+                <div class="champVideConnexion text-red-700">
+                    <?php if (!empty($_GET['erreur'])) {
+                        if ($_GET['erreur'] == 4) {
+                            echo ("Merci de remplir tous les champs.");
+                        } else if ($_GET['erreur'] == 6) {
+                            echo ("Email ou mot de passe incorrect");
+                        }
+                    }; ?>
+
+                </div>
 
 
                 <div>
-                    <button type="submit" onclick="connexion()" class="bouttonConnexion flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
+                    <button type="submit" class="bouttonConnexion flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

@@ -130,6 +130,6 @@ function connexion() {
   };
 
   fetch("./src/connexion.php", params)
-    .then((res) => res.text())
+    .then((res) => res.json())
     .then((data) => console.log(data));
 }

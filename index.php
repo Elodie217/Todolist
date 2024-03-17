@@ -18,11 +18,15 @@ require_once __DIR__ . './autoload.php';
 <!--bg-[url('./asset/media/bureau')] bg-cover bg-fixed bg-center -->
 
 <body class="text-lg relative " style="font-family: sans-serif ;">
+    <div class="hidden"><?php include 'includes/Accueil.php' ?></div>
+
+
     <div <?php if (!empty($_GET['inscription'])) {
             ?> class="" <?php
                     } else { ?> class="hidden" <?php }; ?>>
         <?php include 'includes/Inscription.php'; ?>
     </div>
+
     <div class="">
         <?php
         include 'includes/Connexion.php';

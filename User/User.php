@@ -13,7 +13,7 @@ class User
     private $Mot_de_passe;
 
 
-    function __construct(array $datas)
+    function __construct(array $datas = array())
     {
         foreach ($datas as $key => $value) {
             $this->$key = $value;
