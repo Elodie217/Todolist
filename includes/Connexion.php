@@ -2,7 +2,11 @@
 
 
     <div class="flex min-h-full flex-col justify-center px-6  lg:px-8 ">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm relative">
+
+            <button class="flex items-center absolute left-0 " onclick="redirection('divConnexion', 'divAccueil')"><i class="mr-2.5 fa-solid fa-circle-arrow-left"></i>
+                <p>Retour</p>
+            </button>
 
             <h2 class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900" style="font-family: 'Madimi One', sans-serif ;">Connexion</h2>
         </div>
@@ -16,11 +20,6 @@
                     </div>
                 </div>
                 <div class="emailIncorrectConnexion text-red-700">
-                    <?php if (!empty($_GET['erreur'])) {
-                        if ($_GET['erreur'] == 1) {
-                            echo ("Email incorrect");
-                        }
-                    }; ?>
                 </div>
 
 
@@ -36,13 +35,6 @@
                     </div>
                 </div>
                 <div class="champVideConnexion text-red-700">
-                    <?php if (!empty($_GET['erreur'])) {
-                        if ($_GET['erreur'] == 4) {
-                            echo ("Merci de remplir tous les champs.");
-                        } else if ($_GET['erreur'] == 6) {
-                            echo ("Email ou mot de passe incorrect");
-                        }
-                    }; ?>
 
                 </div>
 

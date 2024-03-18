@@ -54,4 +54,20 @@ class UserManager
             return $statement->rowCount() == 1;
         }
     }
+
+
+
+
+    public function getUserbyEmail(string $email): User|bool
+    {
+        $sql = "SELECT * FROM tdl_user WHERE Email = :email";
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(':email', $email);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
+        $retour = $statement->fetch();
+
+        return $retour;
+    }
 }

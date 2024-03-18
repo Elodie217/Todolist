@@ -1,4 +1,4 @@
-// Inscription
+///////////////////// Inscription /////////////////////
 
 document
   .querySelector(".boutonInscription")
@@ -75,7 +75,18 @@ function inscription() {
 
   fetch("./src/inscription.php", params)
     .then((res) => res.text())
-    .then((data) => console.log(data));
+    .then((data) => reussiteEchecInscription(data));
+}
+
+function reussiteEchecInscription(reponse) {
+  console.log(reponse);
+  if (reponse == "inscriptionReussite") {
+    console.log("dans le if");
+    redirection("divInscription", "divConnexion");
+  } else {
+    console.log("dans le else");
+    document.querySelector(".champVideInscription").innerText = reponse;
+  }
 }
 
 function checkEmail(email) {
@@ -84,7 +95,7 @@ function checkEmail(email) {
   return re.test(email);
 }
 
-// Connexion
+///////////////////// Connexion /////////////////////
 
 document
   .querySelector(".bouttonConnexion")
@@ -130,6 +141,112 @@ function connexion() {
   };
 
   fetch("./src/connexion.php", params)
-    .then((res) => res.json())
+    .then((res) => res.text())
+    .then((data) => reussiteEchecConnexion(data));
+
+  // Si c'est du JSON mettre :   .then((res) => res.json())
+}
+
+function reussiteEchecConnexion(reponse) {
+  if (reponse === "success") {
+    redirection("divConnexion", "divToDoList");
+  } else {
+    document.querySelector(
+      ".champVideConnexion"
+    ).innerText = `Mot de passe ou email incorrecte.`;
+  }
+}
+
+/**
+ * [Affichage des différents blocks]
+ *
+ * @param   {[string]}  blockAddHidden     [Le block qui va être caché]
+ * @param   {[string]}  blockRemoveHidden  [Le block qui va apparaiter]
+ */
+function redirection(blockAddHidden, blockRemoveHidden) {
+  document.querySelector("." + blockAddHidden).classList.add("hidden");
+  document.querySelector("." + blockRemoveHidden).classList.remove("hidden");
+}
+
+/////////////////////Tache/////////////////////
+
+document
+  .querySelector(".boutonAjouter")
+  .addEventListener("click", function (evenement) {
+    let titre = document.querySelector("#titre").value;
+    let date = document.querySelector("#date").value;
+    let priorite = document.querySelector("#priorite").value;
+
+    if (titre !== "" && date !== "" && priorite !== "") {
+      document.querySelector(".erreurTodo").innerText = "";
+
+      ajouterTache();
+      lienTacheCategorie();
+    } else {
+      document.querySelector(
+        ".erreurTodo"
+      ).innerText = `Merci de remplir Le titre et la date.`;
+      evenement.preventDefault();
+    }
+  });
+
+let idTache = "";
+function ajouterTache() {
+  let titre = document.querySelector("#titre").value;
+  let date = document.querySelector("#date").value;
+  let priorite = document.querySelector("#priorite").value;
+  let description = document.querySelector("#description").value;
+
+  let creerTache = {
+    titre: titre,
+    date: date,
+    priorite: priorite,
+    description: description,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(creerTache),
+  };
+
+  fetch("./src/traitement.php", params)
+    .then((res) => res.text())
+    .then((data) => console.log(data))
+    .then((data) => (idTache = data));
+
+  // rouver un moyen de récupérer l'id de la tache ça ça fonctionne pas
+}
+
+function lienTacheCategorie() {
+  let categories = document.querySelectorAll("input[type='checkbox']");
+
+  let categorieTache = [];
+
+  categories.forEach((element) => {
+    if (element.checked == true) {
+      categorieTache += element.value;
+    }
+  });
+  console.log(categorieTache);
+
+  let creerLien = {
+    categorieTache: categorieTache,
+    idTache: idTache,
+  };
+  console.log(creerLien);
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(creerLien),
+  };
+
+  fetch("./src/lienTacheCategorie.php", params)
+    .then((res) => res.text())
     .then((data) => console.log(data));
 }

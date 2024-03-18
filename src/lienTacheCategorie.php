@@ -1,19 +1,4 @@
 <?php
-// if (!isset($_SESSION['connecté'])) {
-//     header('location: connexion.php');
-//     die;
-// }
-
-session_start();
-
-use Appartenir\Appartenir;
-use AppartenirManager\AppartenirManager;
-use DbConnexion\DbConnexion;
-use Tache\Tache;
-use TacheManager\TacheManager;
-use UserManager\UserManager;
-use User\User;
-
 
 require_once __DIR__ . '/../autoload.php';
 
@@ -75,24 +60,24 @@ if (isset($_POST)) {
         }
 
 
-        // // Création lien tache-categorie (appartenir)
+        // Création lien tache-categorie (appartenir)
 
-        // //Là tu créer un tableau dans lequel il y a les id des catégories choisi et tu fais un foreach
+        //Là tu créer un tableau dans lequel il y a les id des catégories choisi et tu fais un foreach
 
 
-        // $infoAppartenir = array(
-        //     "Id_tache" => $titreTache,
-        //     "Id_categorie" => $descriptionTache
-        // );
+        $infoAppartenir = array(
+            "Id_tache" => $titreTache,
+            "Id_categorie" => $descriptionTache
+        );
 
-        // $newLienAppartenir = new Appartenir($infoAppartenir);
-        // $AppartenirManager = new AppartenirManager($dbConnexion);
+        $newLienAppartenir = new Appartenir($infoAppartenir);
+        $AppartenirManager = new AppartenirManager($dbConnexion);
 
-        // if ($AppartenirManager->CreerAppartenir($newLienAppartenir)) {
-        //     echo "Lien créer";
-        // } else {
-        //     echo "Erreur création";
-        // }
+        if ($AppartenirManager->CreerAppartenir($newLienAppartenir)) {
+            echo "Lien créer";
+        } else {
+            echo "Erreur création";
+        }
     } else {
         echo 'Merci de remplir tous les champs.';
     }

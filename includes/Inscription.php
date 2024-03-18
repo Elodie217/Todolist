@@ -5,7 +5,10 @@
 
 
     <div class="flex min-h-full flex-col justify-center px-6  lg:px-8 ">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm relative">
+            <button class="flex items-center absolute left-0 " onclick="redirection('divInscription', 'divAccueil')"><i class="mr-2.5 fa-solid fa-circle-arrow-left"></i>
+                <p>Retour</p>
+            </button>
 
             <h2 class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900" style="font-family: 'Madimi One', sans-serif ;">Inscription</h2>
         </div>

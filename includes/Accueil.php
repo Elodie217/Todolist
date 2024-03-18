@@ -8,8 +8,8 @@
                 Que vous ayez des tâches à accomplir, des projets à suivre ou des objectifs à réaliser, notre plateforme conviviale vous permet de gérer efficacement vos tâches en un seul endroit.</p>
 
             <div class="flex justify-between my-2.5">
-                <button class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl mt-4 shadow-lg mx-5 ml-8">Inscription</button>
-                <button class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl mt-4 shadow-lg mr-8">Connexion</button>
+                <button class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl mt-4 shadow-lg mx-5 ml-8" onclick="redirection('divAccueil', 'divInscription')">Inscription</button>
+                <button class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl mt-4 shadow-lg mr-8" onclick="redirection('divAccueil', 'divConnexion')">Connexion</button>
             </div>
 
             <p class="text-center">Ne laissez plus aucune tâche importante passer entre les mailles du filet. Rejoignez notre communauté dès aujourd'hui et commencez à rendre votre quotidien plus productif et plus organisé.</p>

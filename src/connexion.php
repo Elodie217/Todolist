@@ -27,24 +27,23 @@ if (isset($_POST)) {
         if (filter_var($user['emailConnexion'], FILTER_VALIDATE_EMAIL)) {
             $email = htmlspecialchars($user['emailConnexion']);
         } else {
-            header('location:../index.php?erreur=' . ERREUR_EMAIL);
+            echo 'email invalide';
         }
 
 
 
         if ($userManager->login($email, $user["passwordConnexion"])) {
-            // echo "success";
+            echo "success";
             // faire une session avec l'id de l'utilisateur
-            // $_SESSION['connecté'] = $email;
-            header('Content-Type: application/json');
+            $_SESSION['connecté'] = $email;
+            // header('Content-Type: application/json');
+            // $data = json_encode(['connexion' => CONNEXION_REUSSITE]);
             // echo 'location:../index.php?success=' . CONNEXION_REUSSITE;
-            $data = json_encode(['connexion' => CONNEXION_REUSSITE]);
             // echo $data;
         } else {
-            echo "didn't work";
-            header('location:../index.php?erreur=' . ERREUR_CONNEXION);
+            echo "Erreur de connexion";
         }
     } else {
-        header('location:../index.php?erreur=' . ERREUR_CHAMP_VIDE);
+        echo 'Merci de remplir tous les champs.';
     }
 }

@@ -26,7 +26,7 @@
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
                 $emailUser = htmlspecialchars($user['email']);
             } else {
-                header('location:../index.php?erreur=' . ERREUR_EMAIL);
+                echo 'Email invalide';
             }
 
             if (strlen($user["password"]) > 7 && strlen($user["password2"]) > 7) {
@@ -34,10 +34,10 @@
                     $passwordUser = password_hash($user["password"], PASSWORD_DEFAULT);
                     $password2 = password_hash($user["password2"], PASSWORD_DEFAULT);
                 } else {
-                    header('location:../index.php?erreur=' . ERREUR_PASSWORD_IDENTIQUE);
+                    echo 'Vos mots de passe sont différents.';
                 }
             } else {
-                header('location:../index.php?erreur=' . ERREUR_PASSWORD_LENGTH);
+                echo "Merci d'entrer au moins 7 caractères.";
             }
 
             $infoUser = array(
@@ -52,17 +52,15 @@
 
 
             if ($userManager->creerUser($newUser)) {
-                echo "success";
-                header('location:../index.php?success=' . INSCRIPTION_REUSSITE);
+                echo "inscriptionReussite";
             } else {
-                echo "didn't work";
-                header('location:../index.php?erreur=' . ERREUR_ENREGISTREMENT);
+                echo "Erreur enrigistrement";
             }
         } else {
-            header('location:../index.php?erreur=' . ERREUR_CHAMP_VIDE);
+            echo 'Merci de remplir tous les champs.';
         }
     } else {
-        header('location:../index.php?erreur=' . ERREUR_CHAMP_VIDE);
+        echo 'Merci de remplir tous les champs.';
     }
 
     ?>

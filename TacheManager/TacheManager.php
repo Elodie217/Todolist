@@ -1,20 +1,44 @@
 <?php
 
-namespace ProductManager;
+namespace TacheManager;
 
 use DbConnexion\DbConnexion;
-use Product\Product;
+use Tache\Tache;
 
-class ProductManager
+class TacheManager
 {
 
     private $pdo;
 
     public function __construct(DbConnexion $dbConnexion)
     {
-        // On récupére la fonctin getPdo de DbConnexion
         $this->pdo = $dbConnexion->getPDO();
     }
+
+    public function CreerTache(Tache $Tache): bool
+    {
+
+        $Titre = $Tache->getTitre();
+        $Description = $Tache->getDescription();
+        $Date = $Tache->getDate();
+        $Id_user = $Tache->getId_user();
+        $Id_priorite = $Tache->getId_priorite();
+
+
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO tdl_tache VALUES(NULL,?,?,?,?,?)");
+
+            $stmt->execute([$Titre, $Description, $Date, $Id_user, $Id_priorite]);
+
+            return $stmt->rowCount() == 1;
+        } catch (\PDOException $e) {
+            var_dump($e);
+        }
+    }
+
+
+
+
 
     public function getAllProductsWithCategories()
     {
@@ -108,7 +132,7 @@ class ProductManager
 
     public function editProduct(Product $objet)
     {
-        $id= $objet->getId_products();
+        $id = $objet->getId_products();
         $name = $objet->getName_products();
         $id_category = $objet->getId_category();
         $price = $objet->getPrice_products();
@@ -116,10 +140,10 @@ class ProductManager
         $description = $objet->getDescription_products();
 
         try {
-    
+
             $stmt = $this->pdo->prepare("UPDATE `products` SET `name_products` = ?,`description_products` = ?,`price_products` = ?, `image_products` = ?,  `id_category` = ? WHERE `products`.`id_products` = $id");
             $stmt->execute([$name, $description, $price, $image, $id_category]);
-      return $stmt->rowCount() == 1;
+            return $stmt->rowCount() == 1;
         } catch (\PDOException $e) {
             // erreur
             var_dump($e);
