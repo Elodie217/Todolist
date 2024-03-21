@@ -1,7 +1,7 @@
-<div class=" absolute top-0 bg-white w-screen h-screen z-20">
+<div class=" absolute top-0  w-screen h-screen z-20">
 
 
-    <div class="flex min-h-full flex-col justify-center px-6  lg:px-8 ">
+    <div class="flex min-h-full flex-col justify-center px-6  lg:px-8 bg-[#ffffff99] rounded-2xl sm:mx-auto sm:w-full sm:max-w-sm h-fit">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm relative">
 
             <button class="flex items-center absolute left-0 " onclick="redirection('divConnexion', 'divAccueil')"><i class="mr-2.5 fa-solid fa-circle-arrow-left"></i>
@@ -42,6 +42,8 @@
                 <div>
                     <button type="submit" class="bouttonConnexion flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
                 </div>
+                <div class="InscriptionReussite text-lime-600 hidden my-2 text-center">Inscription réussite !</div>
+
             </div>
         </div>
     </div>

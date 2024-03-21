@@ -52,9 +52,9 @@
 
 
             if ($userManager->creerUser($newUser)) {
-                echo "inscriptionReussite";
+                echo TRUE;
             } else {
-                echo "Erreur enrigistrement";
+                echo "Email déjà utilisé";
             }
         } else {
             echo 'Merci de remplir tous les champs.';

@@ -29,7 +29,7 @@ if (isset($_POST)) {
 
 
         if ($appartenirManager->CreerAppartenir($newAppartenir)) {
-            echo "liencréer";
+            echo TRUE;
         } else {
             echo "Erreur création lien";
         }

@@ -3,5 +3,5 @@ session_start();
 
 session_destroy();
 
-header('location:connexion.php');
+header('location:index.php');
 exit;

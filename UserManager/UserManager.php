@@ -26,15 +26,16 @@ class UserManager
         $email = $user->getEmail();
         $password = $user->getMot_de_passe();
 
-        try {
-            $stmt = $this->pdo->prepare("INSERT INTO tdl_user VALUES(NULL,?,?,?,?)");
+        // try {
+        $stmt = $this->pdo->prepare("INSERT INTO tdl_user VALUES(NULL,?,?,?,?)");
 
-            $stmt->execute([$name, $prenom, $email, $password]);
+        $stmt->execute([$name, $prenom, $email, $password]);
 
-            return $stmt->rowCount() == 1;
-        } catch (\PDOException $e) {
-            var_dump($e);
-        }
+        return $stmt->rowCount() == 1;
+        // } 
+        // catch (\PDOException $e) {
+        //     echo 'Email déjà utilisé';
+        // }
     }
 
 

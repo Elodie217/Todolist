@@ -30,10 +30,10 @@ if (isset($_SESSION['connecté'])) {
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Madimi+One&display=swap" rel="stylesheet">
 </head>
 <!-- font-family: "Dancing Script", cursive; -->
-<!--bg-[url('./asset/media/bureau')] bg-cover bg-fixed bg-center -->
 
-<body class="text-lg relative " style="font-family: sans-serif ;">
-    <div class="divAccueil hidden"><?php include 'includes/Accueil.php' ?></div>
+<body class="text-lg relative bg-[url('./asset/media/bureau')] bg-cover bg-fixed bg-center
+" style="font-family: sans-serif ;">
+    <div class="divAccueil "><?php include 'includes/Accueil.php' ?></div>
 
 
     <div class="divInscription hidden">
@@ -46,28 +46,24 @@ if (isset($_SESSION['connecté'])) {
         ?>
     </div>
 
-    <div class="divModificationUser hidden">
+
+
+    <section class="divToDoList hidden ">
         <?php
-        include 'includes/ModificationUser.php';
+
+
+
+
         ?>
-    </div>
+        <div></div>
+        <header class="bg-[#FFF8E8]/[.9] pt-4">
+            <a href="./deconnexion.php" class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl ml-[85%] shadow-lg">Déconnexion</a>
+            <h1 class="text-center text-5xl pb-5 -mt-4" style="font-family: 'Madimi One', sans-serif ;">To Do list</h1>
+        </header>
 
-    <section class="divToDoList ">
+
         <?php
-
         if (isset($_SESSION['connecté'])) {
-
-
-
-        ?>
-            <div></div>
-            <header class="bg-[#FFF8E8]/[.9]">
-                <a href="./deconnexion.php" class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl ml-[85%] mt-4 shadow-lg">Déconnexion</a>
-                <h1 class="text-center text-5xl pb-5 -mt-3" style="font-family: 'Madimi One', sans-serif ;">To Do list</h1>
-            </header>
-
-
-            <?php
 
             // $tacheManager = new TacheManager($DbConnexion);
             // $taches = $tacheManager->getTachebyIdUser();
@@ -79,13 +75,14 @@ if (isset($_SESSION['connecté'])) {
 
 
 
-            ?>
+        ?>
             <main class="flex">
-                <section class="menuGauche w-1/6 px-2.5 py-2.5 bg-[#FFF8E8]/[.9]">
-                    <p class="text-right mr-4 font-semibold mb-7 text-2xl capitalize"> <?= $utilisateur->getPrenom() ?> <?= $utilisateur->getNom() ?></p>
-                    <button class="text-right mr-4">Modifier mon profil</button>
+                <section class="menuGauche min-w-56 px-2.5 py-2.5 bg-[#FFF8E8]/[.9]">
+                    <p class="text-right mr-2 font-semibold mb-7 text-2xl capitalize"> <?= $utilisateur->getPrenom() ?> <?= $utilisateur->getNom() ?></p>
+                    <button class=" btnModifier text-right ml-6">Modifier mon profil</button>
                 </section>
-                <section class="formulaireTodo w-[30%] p-3.5 shadow-lg m-9 rounded-2xl h-fit bg-[#DFE0DF]/[.6]">
+
+                <section class="formulaireTodo w-fit max-w-[430px] min-w-[400px] p-3.5 shadow-lg m-9 rounded-2xl h-fit bg-[#DFE0DF]/[.6]">
 
                     <h2 class="text-2xl text-center font-semibold">Nouvelle tache</h2>
                     <div>
@@ -134,13 +131,13 @@ if (isset($_SESSION['connecté'])) {
 
                         <button type="submit" class="boutonAjouter flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 text-red-700">Ajouter</button>
 
-                        <div class="tacheCreer text-lime-600 hidden">Tache créer !</div>
+                        <div class="tacheCreer text-lime-600 hidden my-2 text-center">Tache créer !</div>
                     </div>
                 </section>
 
 
-                <section class="listTache w-1/2 flex flex-wrap mr-[3%]">
-                    <div class="w-2/5 m-[5%] shadow-lg rounded-2xl relative bg-[#DFE0DF]/[.6]">
+                <section class="listTache flex flex-wrap mr-[3%]">
+                    <!-- <div class="w-2/5 m-[5%] shadow-lg rounded-2xl relative bg-[#DFE0DF]/[.6]">
                         <div class="w-full bg-[#ff0000] h-3.5 rounded-t-2xl"></div>
 
                         <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
@@ -189,10 +186,18 @@ if (isset($_SESSION['connecté'])) {
                                 <p>Lorem ipsum dolor sit amet consectetur ...</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </section>
             </main>
+
+            <div class="divModificationUser hidden">
+                <?php
+                include 'includes/ModificationUser.php';
+                ?>
+            </div>
+
+
         <?php }
         ?>
     </section>

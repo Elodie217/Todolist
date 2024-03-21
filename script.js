@@ -80,9 +80,13 @@ function inscription() {
 
 function reussiteEchecInscription(reponse) {
   console.log(reponse);
-  if (reponse == "inscriptionReussite") {
+  if (reponse) {
     console.log("dans le if");
     redirection("divInscription", "divConnexion");
+    document.querySelector('.InscriptionReussite').classList.remove('hidden');
+      setTimeout(() => {
+      document.querySelector('.InscriptionReussite').classList.add('hidden');
+      }, 5000);  
   } else {
     console.log("dans le else");
     document.querySelector(".champVideInscription").innerText = reponse;
@@ -242,85 +246,84 @@ function lienTacheCategorie(idTache) {
 
   fetch("./src/lienTacheCategorie.php", params)
     .then((res) => res.text())
-    .then((data) => {if(Number.isInteger(data)){
+    .then((data) => {if(data)
+      {
       document.querySelector('.tacheCreer').classList.remove('hidden');
       setTimeout(() => {
       document.querySelector('.tacheCreer').classList.add('hidden');
-      }, 5000);    };
-    recupererTaches() 
+      }, 5000);   
+     };
+    recupererTaches(); 
 
     });
 
 }
 
-// function afficherTaches() {
 
-//   innerHTML = `<div class='w-2/5 m-[5%] shadow-xl rounded-2xl relative` + if (condition) {
-
-//   } +  `bg-[#DFE0DF]/[.6]'>
-//                         <div class='w-full bg-[#ff4f00] h-3.5 rounded-t-2xl'></div>
-//                         <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-//                         <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-//                         <div class='px-2.5 py-2.5'>
-//                             <h3 class='text-2xl text-center my-3 font-semibold'>Titre tache</h3>
-//                             <div class='flex justify-between'>
-//                                 <p>25/02/2024</p>
-//                                 <i class='fa-solid fa-dumbbell'></i>
-//                             </div>
-//                             <div class='my-2.5'>
-//                                 <p>Description</p>
-//                                 <p>Lorem ipsum dolor sit amet consectetur ...</p>
-//                             </div>
-//                         </div>
-//                     </div>`;
-// }
 recupererTaches() 
 async function recupererTaches() {
-  
-  // let response = await fetch("./src/afficherTache.php");
-  // // let tache = await response.json();
-  // let tache = await response.json();
-  // console.log(tache);
+ 
 
   fetch("./src/afficherTache.php")
     .then((res) => res.json())
     .then((data) => afficherTaches(data))
 
 
-// ça fonctionne pas !!!!!!!!!!!!!!!!!!!!
-// Faut trouver une pour récupérer les objets
- 
 }
 
 
 function afficherTaches(Taches){
 
-
-
   let cards = document.querySelector(".listTache");
-  // Taches.forEach(element => {
-  //   console.log(element['Date']);
-  // });
+ 
   cards.innerHTML = "";
 
 
    Taches.map((user) => {
-    return (cards.innerHTML += `<div class='w-2/5 m-[5%] shadow-xl rounded-2xl relative bg-[#DFE0DF]/[.6]'>
-                        <div class='w-full bg-[#ff4f00] h-3.5 rounded-t-2xl'></div>
+    (cards.innerHTML += `<div class='w-60 h-fit m-[5%] mt-10 shadow-xl rounded-2xl relative bg-[#DFE0DF]/[.6]'>
+                        <div class='divCouleurPriorite`+user['Id_tache']+` w-full h-3.5 rounded-t-2xl'></div>
                         <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
                         <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
                         <div class='px-2.5 py-2.5'>
-                            <h3 class='text-2xl text-center my-3 font-semibold'>`+user['Titre']+`</h3>
+                            <h3 class='text-2xl text-center my-3.5 font-semibold'>`+user['Titre']+`</h3>
                             <div class='flex justify-between'>
                                 <p>`+user['Date'] +`</p>
                                 <i class='fa-solid fa-dumbbell'></i>
                             </div>
                             <div class='my-2.5'>
-                                <p>Description</p>
+                                <p class='mb-1 font-semibold'>Description :</p>
                                 <p>`+user['Description']+`</p>
                             </div>
                         </div>
-                    </div>`)
-  });
+                    </div>`);
+  
+
+  let divCouleurPriorite = document.querySelector('.divCouleurPriorite'+user['Id_tache']);
+    
+    if (user['Id_priorite'] == 1) {
+      divCouleurPriorite.classList.add(`bg-[#1eff00]`);
+      
+    }else if (user['Id_priorite'] == 2){ 
+      divCouleurPriorite.classList.add(`bg-[#ff4f00]`);
+      
+    }else if (user['Id_priorite'] == 3){  
+      divCouleurPriorite.classList.add(`bg-[#ff0000]`);
+      
+    }
+  
+});
 }
-// T'en es là, il faut que tu fasses le HTML pour afficher les divs 
+
+
+/////////////////////Modification User/////////////////////
+document
+  .querySelector(".btnModifier")
+  .addEventListener("click", function () {
+    document.querySelector('.divModificationUser').classList.remove("hidden");
+  })
+
+  document
+  .querySelector(".btnRetourModificationUser")
+  .addEventListener("click", function () {
+    document.querySelector('.divModificationUser').classList.add("hidden");
+  })

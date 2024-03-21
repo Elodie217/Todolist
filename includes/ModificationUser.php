@@ -7,7 +7,7 @@ $utilisateur
 
     <div class="flex min-h-full flex-col justify-center px-6  lg:px-8 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm relative">
-            <button class="flex items-center absolute left-0 " onclick="redirection('divInscription', 'divAccueil')">
+            <button class="btnRetourModificationUser flex items-center absolute left-0 ">
                 <!-- Cahnger les divs -->
                 <i class="mr-2.5 fa-solid fa-circle-arrow-left"></i>
                 <p>Retour</p>
