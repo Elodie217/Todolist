@@ -34,12 +34,11 @@ if (isset($_POST)) {
 
         if ($userManager->login($email, $user["passwordConnexion"])) {
             echo "success";
-            // faire une session avec l'id de l'utilisateur
-            $_SESSION['connecté'] = $email;
-            // header('Content-Type: application/json');
-            // $data = json_encode(['connexion' => CONNEXION_REUSSITE]);
-            // echo 'location:../index.php?success=' . CONNEXION_REUSSITE;
-            // echo $data;
+            $DbConnexion = new DbConnexion();
+            $UserManager = new UserManager($DbConnexion);
+            $utilisateur = $UserManager->getUserbyEmail($email);
+            $idUser = $utilisateur->getId_user();
+            $_SESSION['connecté'] = $idUser;
         } else {
             echo "Erreur de connexion";
         }

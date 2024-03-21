@@ -1,8 +1,4 @@
 <?php
-// if (!isset($_SESSION['connecté'])) {
-//     header('location: connexion.php');
-//     die;
-// }
 
 session_start();
 
@@ -42,10 +38,7 @@ if (isset($_POST)) {
 
         $descriptionTache = htmlspecialchars($tache['description']);
 
-        $userManager = new UserManager($dbConnexion);
-        $utilisateur = $userManager->getUserbyEmail($_SESSION['connecté']);
-
-        $idUtilisateur = $utilisateur->getId_user();
+        $idUtilisateur = ($_SESSION['connecté']);
 
         if ($tache['priorite'] == 'normal') {
             $prioriteTache = 1;
@@ -67,32 +60,8 @@ if (isset($_POST)) {
 
         $newTache = new Tache($infoTache);
 
-
-        if ($tacheManager->CreerTache($newTache)) {
-            echo "tachecréer";
-        } else {
-            echo "Erreur création";
-        }
-
-
-        // // Création lien tache-categorie (appartenir)
-
-        // //Là tu créer un tableau dans lequel il y a les id des catégories choisi et tu fais un foreach
-
-
-        // $infoAppartenir = array(
-        //     "Id_tache" => $titreTache,
-        //     "Id_categorie" => $descriptionTache
-        // );
-
-        // $newLienAppartenir = new Appartenir($infoAppartenir);
-        // $AppartenirManager = new AppartenirManager($dbConnexion);
-
-        // if ($AppartenirManager->CreerAppartenir($newLienAppartenir)) {
-        //     echo "Lien créer";
-        // } else {
-        //     echo "Erreur création";
-        // }
+        $creerTache = $tacheManager->CreerTache($newTache);
+        echo $creerTache;
     } else {
         echo 'Merci de remplir tous les champs.';
     }

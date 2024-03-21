@@ -4,6 +4,7 @@ namespace UserManager;
 
 use DbConnexion\DbConnexion;
 use PDO;
+use PDOException;
 use User\User;
 
 class UserManager
@@ -67,6 +68,59 @@ class UserManager
         $statement->execute();
         $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
         $retour = $statement->fetch();
+
+        return $retour;
+    }
+
+    public function getUserbyId(string $IdUser): User|bool
+    {
+        $sql = "SELECT * FROM tdl_user WHERE Id_user = :IdUser";
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(':IdUser', $IdUser);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
+        $retour = $statement->fetch();
+
+        return $retour;
+    }
+
+
+    public function deleteUser($id)
+    {
+        try {
+            $sql = "DELETE FROM tdl_tache WHERE Id_user = :ID;
+            DELETE FROM tdl_user WHERE Id_user = :ID;";
+
+            $statement = $this->pdo->prepare($sql);
+
+            return $statement->execute([':ID' => $id]);
+        } catch (PDOException $error) {
+            echo "Erreur de suppression : " . $error->getMessage();
+            return FALSE;
+        }
+    }
+
+
+
+
+    public function updateTache(User $user): bool
+    {
+        $sql = "UPDATE tdl_user 
+            SET
+              Nom = :Nom,
+              Prenom =  :Prenom,
+              Email = :Email,
+            WHERE Id_user = :Id_user";
+
+        $statement = $this->pdo->prepare($sql);
+
+        $retour = $statement->execute([
+            ':Id_user' => $user->getId_user(),
+            ':Nom' => $user->getNom(),
+            ':Prenom' => $user->getPrenom(),
+            ':Email' => $user->getEmail(),
+        ]);
 
         return $retour;
     }

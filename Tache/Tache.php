@@ -10,9 +10,8 @@ class Tache
     private $Date;
     private $Id_user;
     private $Id_priorite;
-    // private $Categorie;
 
-    function __construct(array $datas)
+    function __construct(array $datas = [])
     {
         foreach ($datas as $key => $value) {
             $this->$key = $value;
@@ -126,22 +125,8 @@ class Tache
 
         return $this;
     }
-
-    // /**
-    //  * Get the value of Categorie
-    //  */
-    // public function getCategorie()
-    // {
-    //     return $this->Categorie;
-    // }
-
-    // /**
-    //  * Set the value of Categorie
-    //  */
-    // public function setCategorie($Categorie)
-    // {
-    //     $this->Categorie = $Categorie;
-
-    //     return $this;
-    // }
+    public function getObjectToArray(): array
+    {
+        return ['Id_tache' => $this->getId_tache(), 'Titre' => $this->getTitre(), 'Description' => $this->getDescription(), 'Date' => $this->getDate(), 'Id_user' => $this->getId_user(), 'Id_priorite' => $this->getId_priorite()];
+    }
 }

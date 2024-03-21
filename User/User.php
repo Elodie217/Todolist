@@ -119,4 +119,10 @@ class User
 
         return $this;
     }
+
+    //////////////////////////////////////////////////////
+    public function getObjectToArray(): array
+    {
+        return ['Id_user' => $this->getId_user(), 'Nom' => $this->getNom(), 'Prenom' => $this->getPrenom(), 'Email' => $this->getEmail(), 'Mot_de_passe' => $this->getMot_de_passe()];
+    }
 }

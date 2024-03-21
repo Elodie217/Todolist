@@ -181,7 +181,6 @@ document
       document.querySelector(".erreurTodo").innerText = "";
 
       ajouterTache();
-      lienTacheCategorie();
     } else {
       document.querySelector(
         ".erreurTodo"
@@ -191,7 +190,7 @@ document
   });
 
 let idTache = "";
-function ajouterTache() {
+async function ajouterTache() {
   let titre = document.querySelector("#titre").value;
   let date = document.querySelector("#date").value;
   let priorite = document.querySelector("#priorite").value;
@@ -214,13 +213,10 @@ function ajouterTache() {
 
   fetch("./src/traitement.php", params)
     .then((res) => res.text())
-    .then((data) => console.log(data))
-    .then((data) => (idTache = data));
-
-  // rouver un moyen de récupérer l'id de la tache ça ça fonctionne pas
+    .then((data) => lienTacheCategorie(data));
 }
 
-function lienTacheCategorie() {
+function lienTacheCategorie(idTache) {
   let categories = document.querySelectorAll("input[type='checkbox']");
 
   let categorieTache = [];
@@ -230,13 +226,11 @@ function lienTacheCategorie() {
       categorieTache += element.value;
     }
   });
-  console.log(categorieTache);
 
   let creerLien = {
-    categorieTache: categorieTache,
     idTache: idTache,
+    categorieTache: categorieTache,
   };
-  console.log(creerLien);
 
   let params = {
     method: "POST",
@@ -248,5 +242,85 @@ function lienTacheCategorie() {
 
   fetch("./src/lienTacheCategorie.php", params)
     .then((res) => res.text())
-    .then((data) => console.log(data));
+    .then((data) => {if(Number.isInteger(data)){
+      document.querySelector('.tacheCreer').classList.remove('hidden');
+      setTimeout(() => {
+      document.querySelector('.tacheCreer').classList.add('hidden');
+      }, 5000);    };
+    recupererTaches() 
+
+    });
+
 }
+
+// function afficherTaches() {
+
+//   innerHTML = `<div class='w-2/5 m-[5%] shadow-xl rounded-2xl relative` + if (condition) {
+
+//   } +  `bg-[#DFE0DF]/[.6]'>
+//                         <div class='w-full bg-[#ff4f00] h-3.5 rounded-t-2xl'></div>
+//                         <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
+//                         <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
+//                         <div class='px-2.5 py-2.5'>
+//                             <h3 class='text-2xl text-center my-3 font-semibold'>Titre tache</h3>
+//                             <div class='flex justify-between'>
+//                                 <p>25/02/2024</p>
+//                                 <i class='fa-solid fa-dumbbell'></i>
+//                             </div>
+//                             <div class='my-2.5'>
+//                                 <p>Description</p>
+//                                 <p>Lorem ipsum dolor sit amet consectetur ...</p>
+//                             </div>
+//                         </div>
+//                     </div>`;
+// }
+recupererTaches() 
+async function recupererTaches() {
+  
+  // let response = await fetch("./src/afficherTache.php");
+  // // let tache = await response.json();
+  // let tache = await response.json();
+  // console.log(tache);
+
+  fetch("./src/afficherTache.php")
+    .then((res) => res.json())
+    .then((data) => afficherTaches(data))
+
+
+// ça fonctionne pas !!!!!!!!!!!!!!!!!!!!
+// Faut trouver une pour récupérer les objets
+ 
+}
+
+
+function afficherTaches(Taches){
+
+
+
+  let cards = document.querySelector(".listTache");
+  // Taches.forEach(element => {
+  //   console.log(element['Date']);
+  // });
+  cards.innerHTML = "";
+
+
+   Taches.map((user) => {
+    return (cards.innerHTML += `<div class='w-2/5 m-[5%] shadow-xl rounded-2xl relative bg-[#DFE0DF]/[.6]'>
+                        <div class='w-full bg-[#ff4f00] h-3.5 rounded-t-2xl'></div>
+                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
+                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
+                        <div class='px-2.5 py-2.5'>
+                            <h3 class='text-2xl text-center my-3 font-semibold'>`+user['Titre']+`</h3>
+                            <div class='flex justify-between'>
+                                <p>`+user['Date'] +`</p>
+                                <i class='fa-solid fa-dumbbell'></i>
+                            </div>
+                            <div class='my-2.5'>
+                                <p>Description</p>
+                                <p>`+user['Description']+`</p>
+                            </div>
+                        </div>
+                    </div>`)
+  });
+}
+// T'en es là, il faut que tu fasses le HTML pour afficher les divs 

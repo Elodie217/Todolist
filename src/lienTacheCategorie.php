@@ -1,85 +1,38 @@
 <?php
 
+use Appartenir\Appartenir;
+use AppartenirManager\AppartenirManager;
+use DbConnexion\DbConnexion;
+
 require_once __DIR__ . '/../autoload.php';
 
 
 if (isset($_POST)) {
     $data = file_get_contents("php://input");
-    $tache = (json_decode($data, true));
+    $lienAppartenir = (json_decode($data, true));
 
+    $dbConnexion = new DbConnexion();
+    $appartenirManager = new AppartenirManager($dbConnexion);
 
-    if (isset($tache['titre']) && !empty($tache['titre']) && isset($tache['date']) && !empty($tache['date']) && isset($tache['priorite']) && !empty($tache['priorite'])) {
+    $idTache = htmlspecialchars($lienAppartenir['idTache']);
+    $idCategories = str_split(htmlspecialchars($lienAppartenir['categorieTache']));
 
-
-        $dbConnexion = new DbConnexion();
-        $tacheManager = new TacheManager($dbConnexion);
-
-
-        $titreTache = htmlspecialchars($tache['titre']);
-
-        setlocale(LC_TIME, ['fr', 'fra', 'fr_FR']);
-
-        if ($tache['date']) {
-            $dateTache = htmlspecialchars($tache['date']);
-        } else {
-            echo "La date n'est pas valide";
-        }
-
-        $descriptionTache = htmlspecialchars($tache['description']);
-
-        $userManager = new UserManager($dbConnexion);
-        $utilisateur = $userManager->getUserbyEmail($_SESSION['connecté']);
-
-        $idUtilisateur = $utilisateur->getId_user();
-
-        if ($tache['priorite'] == 'normal') {
-            $prioriteTache = 1;
-        } else if ($tache['priorite'] == 'important') {
-            $prioriteTache = 2;
-        } else if ($tache['priorite'] == 'urgent') {
-            $prioriteTache = 3;
-        }
-
-        // Création tache
-
-        $infoTache = array(
-            "Titre" => $titreTache,
-            "Description" => $descriptionTache,
-            "Date" => $dateTache,
-            "Id_user" => $idUtilisateur,
-            'Id_priorite' => $prioriteTache
-        );
-
-        $newTache = new Tache($infoTache);
-
-
-        if ($tacheManager->CreerTache($newTache)) {
-            echo "tachecréer";
-        } else {
-            echo "Erreur création";
-        }
-
-
-        // Création lien tache-categorie (appartenir)
-
-        //Là tu créer un tableau dans lequel il y a les id des catégories choisi et tu fais un foreach
-
+    foreach ($idCategories as $idCategorie) {
+        // Création lien
 
         $infoAppartenir = array(
-            "Id_tache" => $titreTache,
-            "Id_categorie" => $descriptionTache
+            "Id_tache" => $idTache,
+            "Id_categorie" => $idCategorie
         );
 
-        $newLienAppartenir = new Appartenir($infoAppartenir);
-        $AppartenirManager = new AppartenirManager($dbConnexion);
+        $newAppartenir = new Appartenir($infoAppartenir);
 
-        if ($AppartenirManager->CreerAppartenir($newLienAppartenir)) {
-            echo "Lien créer";
+
+        if ($appartenirManager->CreerAppartenir($newAppartenir)) {
+            echo "liencréer";
         } else {
-            echo "Erreur création";
+            echo "Erreur création lien";
         }
-    } else {
-        echo 'Merci de remplir tous les champs.';
     }
 } else {
     echo 'Merci de remplir tous les champs.';
