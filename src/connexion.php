@@ -33,14 +33,16 @@ if (isset($_POST)) {
 
 
         if ($userManager->login($email, $user["passwordConnexion"])) {
-            echo "success";
             $DbConnexion = new DbConnexion();
             $UserManager = new UserManager($DbConnexion);
             $utilisateur = $UserManager->getUserbyEmail($email);
             $idUser = $utilisateur->getId_user();
             $_SESSION['connecté'] = $idUser;
+
+            include __DIR__ . "/../includes/Todolist.php";
+            // echo contentfile d'un include
         } else {
-            echo "Erreur de connexion";
+            echo FALSE;
         }
     } else {
         echo 'Merci de remplir tous les champs.';

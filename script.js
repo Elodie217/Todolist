@@ -152,13 +152,20 @@ function connexion() {
 }
 
 function reussiteEchecConnexion(reponse) {
-  if (reponse === "success") {
-    redirection("divConnexion", "divToDoList");
-  } else {
+ if(reponse == false) {
     document.querySelector(
       ".champVideConnexion"
     ).innerText = `Mot de passe ou email incorrecte.`;
-  }
+  } else {
+    redirection("divConnexion", "divToDoList");
+    afficherTodo(reponse);
+    // faire un innerHTML de reponse
+  } 
+}
+
+function afficherTodo(include){
+  document.querySelector('.divToDoList').innerHTML = include;
+  recupererTaches() ;
 }
 
 /**
@@ -260,7 +267,6 @@ function lienTacheCategorie(idTache) {
 }
 
 
-recupererTaches() 
 async function recupererTaches() {
  
 
@@ -316,14 +322,88 @@ function afficherTaches(Taches){
 
 
 /////////////////////Modification User/////////////////////
-document
-  .querySelector(".btnModifier")
-  .addEventListener("click", function () {
-    document.querySelector('.divModificationUser').classList.remove("hidden");
-  })
+// document
+//   .querySelector(".btnModifier")
+//   .addEventListener("click", function () {
+//     document.querySelector('.divModificationUser').classList.remove("hidden");
+//   })
 
   document
+  .querySelector("#btnModifier")
+  .addEventListener("click", console.log('essaie bouton modifier'))
+
+document
   .querySelector(".btnRetourModificationUser")
   .addEventListener("click", function () {
     document.querySelector('.divModificationUser').classList.add("hidden");
   })
+
+
+document
+  .querySelector(".boutonModification")
+  .addEventListener("click", function (evenement) {
+    let nomModification = document.querySelector("#nomModification").value;
+    let prenomModification = document.querySelector("#prenomModification").value;
+    let emailModification = document.querySelector("#emailModification").value;
+    if (
+      nomModification !== "" &&
+      prenomModification !== "" &&
+      emailModification !== "" 
+    ) {
+      document.querySelector(".champVideModification").innerText = "";
+      if (checkEmail(emailModification) == true) {
+        document.querySelector(".emailIncorrectModification").innerText = "";
+        
+            modification();
+         
+      } else {
+        document.querySelector(
+          ".emailIncorrectModification"
+        ).innerText = `Merci de mettre un email valide.`;
+        evenement.preventDefault();
+      }
+    } else {
+      document.querySelector(
+        ".champVideModification"
+      ).innerText = `Merci de remplir tous les champs.`;
+      evenement.preventDefault();
+    }
+  });
+
+function modification() {
+  let nomModification = document.querySelector("#nomModification").value;
+    let prenomModification = document.querySelector("#prenomModification").value;
+    let emailModification = document.querySelector("#emailModification").value;
+
+  let userModification = {
+    nomModification: nomModification,
+    prenomModification: prenomModification,
+    emailModification: emailModification
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(userModification),
+  };
+
+  fetch("./src/ModificationUser.php", params)
+    .then((res) => res.text())
+    .then((data) => console.log(data));
+}
+
+function reussiteEchecInscription(reponse) {
+  if (reponse) {
+    document.querySelector('.divModificationUser').classList.remove("hidden");
+
+    document.querySelector('.ModificationReussite').classList.remove('hidden');
+      setTimeout(() => {
+      document.querySelector('.ModificationReussite').classList.add('hidden');
+      }, 5000);  
+  } else {
+    console.log("dans le else");
+    document.querySelector(".champVideInscription").innerText = reponse;
+  }
+}

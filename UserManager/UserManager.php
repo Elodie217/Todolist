@@ -105,7 +105,7 @@ class UserManager
 
 
 
-    public function updateTache(User $user): bool
+    public function updateUser(User $user): bool
     {
         $sql = "UPDATE tdl_user 
             SET
