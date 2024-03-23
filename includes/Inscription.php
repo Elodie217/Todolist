@@ -1,16 +1,16 @@
 <?php
 ?>
 
-<div class=" absolute top-0 bg-white w-screen h-screen z-20">
+<div class=" absolute top-0 w-screen h-screen z-20">
 
 
-    <div class="flex min-h-full flex-col justify-center px-6  lg:px-8 ">
+    <div class="flex flex-col justify-center px-6  lg:px-8 bg-[#ffffff99] rounded-2xl sm:mx-auto sm:w-full sm:max-w-sm h-fit">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm relative">
             <button class="flex items-center absolute left-0 " onclick="redirection('divInscription', 'divAccueil')"><i class="mr-2.5 fa-solid fa-circle-arrow-left"></i>
                 <p>Retour</p>
             </button>
 
-            <h2 class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900" style="font-family: 'Madimi One', sans-serif ;">Inscription</h2>
+            <h2 class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 mt-8" style="font-family: 'Madimi One', sans-serif ;">Inscription</h2>
         </div>
 
         <div class="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -61,7 +61,7 @@
                 <div class="champVideInscription text-red-700"></div>
 
                 <div>
-                    <button type="submit" class="boutonInscription flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 text-red-700">Inscription</button>
+                    <button type="submit" class="boutonInscription flex w-full justify-center rounded-md bg-[#FF9A99] hover:bg-[#FF9A99]/[.8] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 text-red-700">Inscription</button>
                 </div>
             </div>
         </div>

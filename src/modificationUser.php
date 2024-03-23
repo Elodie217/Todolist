@@ -10,21 +10,21 @@
     if (isset($_POST)) {
         $data = file_get_contents("php://input");
         $userModification = (json_decode($data, true));
+        var_dump($userModification);
 
-
-        if (isset($userModification['nom']) && !empty($userModification['nom']) && isset($userModification['prenom']) && !empty($userModification['prenom']) && isset($userModification['email']) && !empty($userModification['email'])) {
+        if (isset($userModification['nomModification']) && !empty($userModification['nomModification']) && isset($userModification['prenomModification']) && !empty($userModification['prenomModification']) && isset($userModification['emailModification']) && !empty($userModification['emailModification'])) {
 
 
             $dbConnexion = new DbConnexion();
             $userManager = new UserManager($dbConnexion);
 
 
-            $nomUser = htmlspecialchars($userModification['nom']);
-            $prenomUser = htmlspecialchars($userModification['prenom']);
+            $nomUser = htmlspecialchars($userModification['nomModification']);
+            $prenomUser = htmlspecialchars($userModification['prenomModification']);
 
 
-            if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
-                $emailUser = htmlspecialchars($userModification['email']);
+            if (filter_var($userModification['emailModification'], FILTER_VALIDATE_EMAIL)) {
+                $emailUser = htmlspecialchars($userModification['emailModification']);
             } else {
                 echo 'Email invalide';
             }
@@ -40,9 +40,15 @@
 
 
             if ($userManager->updateUser($newUser)) {
-                echo TRUE;
+
+                $nomUser = $newUser->getNom();
+                $prenomUser = $newUser->getPrenom();
+                $emailUser = $newUser->getEmail();
+
+                $arrUser = array('NomUser' => $nomUser, 'PrenomUser' => $prenomUser, 'EmailUser' => $emailUser);
+                echo json_encode($arrUser);
             } else {
-                echo "Email déjà utilisé";
+                echo FALSE;
             }
         } else {
             echo 'Merci de remplir tous les champs.';

@@ -39,8 +39,13 @@ if (isset($_POST)) {
             $idUser = $utilisateur->getId_user();
             $_SESSION['connecté'] = $idUser;
 
-            include __DIR__ . "/../includes/Todolist.php";
-            // echo contentfile d'un include
+            $nomUser = $utilisateur->getNom();
+            $prenomUser = $utilisateur->getPrenom();
+            $emailUser = $utilisateur->getEmail();
+
+
+            $arrUser = array('NomUser' => $nomUser, 'PrenomUser' => $prenomUser, 'EmailUser' => $emailUser);
+            echo json_encode($arrUser);
         } else {
             echo FALSE;
         }

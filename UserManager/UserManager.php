@@ -2,6 +2,7 @@
 
 namespace UserManager;
 
+
 use DbConnexion\DbConnexion;
 use PDO;
 use PDOException;
@@ -107,17 +108,19 @@ class UserManager
 
     public function updateUser(User $user): bool
     {
+        session_start();
+
         $sql = "UPDATE tdl_user 
             SET
               Nom = :Nom,
               Prenom =  :Prenom,
-              Email = :Email,
+              Email = :Email
             WHERE Id_user = :Id_user";
 
         $statement = $this->pdo->prepare($sql);
 
         $retour = $statement->execute([
-            ':Id_user' => $user->getId_user(),
+            ':Id_user' => $_SESSION['connecté'],
             ':Nom' => $user->getNom(),
             ':Prenom' => $user->getPrenom(),
             ':Email' => $user->getEmail(),
