@@ -194,8 +194,17 @@ function reussiteEchecConnexion(reponse) {
 
 function afficherTodo(Nom, Prenom) {
   document.querySelector(".nomPrenom").innerHTML = Prenom + " " + Nom;
+
   recupererTaches();
 }
+
+// let iconeTravail = document.querySelector(".fa-briefcase");
+
+// iconeTravail.forEach((element) => {
+//   element.addEventListener("mouseover", function () {
+//     console.log("je suis au dessus");
+//   });
+// });
 
 function afficherModification(Nom, Prenom, Email) {
   document.querySelector(".formModification").innerHTML =
@@ -324,6 +333,7 @@ function lienTacheCategorie(idTache) {
         }, 4000);
       }
       recupererTaches();
+      resetForm();
     });
 }
 
@@ -358,7 +368,9 @@ function afficherTaches(Taches) {
                                 <p>` +
       user["Date"] +
       `</p>
-                                <i class='fa-solid fa-dumbbell'></i>
+                                <div class='iconeCategorie` +
+      user["Id_tache"] +
+      `'></div>
                             </div>
                             <div class='my-2.5'>
                                 <p class='mb-1 font-semibold'>Description :</p>
@@ -380,6 +392,39 @@ function afficherTaches(Taches) {
     } else if (user["Id_priorite"] == 3) {
       divCouleurPriorite.classList.add(`bg-[#ff0000]`);
     }
+
+    let iconeCategorie = document.querySelector(
+      ".iconeCategorie" + user["Id_tache"]
+    );
+
+    const idcat = user["Id_categorie"].toString();
+    let arrayCategorie = idcat.split(",");
+
+    arrayCategorie.forEach((element) => {
+      if (element == 1) {
+        iconeCategorie.innerHTML += `<i class="ml-2 fa-solid fa-briefcase"></i>`;
+      } else if (element == 2) {
+        iconeCategorie.innerHTML += `<i class="ml-2 fa-solid fa-user"></i>`;
+      } else if (element == 3) {
+        iconeCategorie.innerHTML += `<i class="ml-2 fa-solid fa-handshake-simple"></i>`;
+      } else if (element == 4) {
+        iconeCategorie.innerHTML += `<i class="ml-2 fa-solid fa-house-user"></i>`;
+      } else if (element == 5) {
+        iconeCategorie.innerHTML += `<i class="ml-2 fa-solid fa-dumbbell"></i>`;
+      }
+    });
+  });
+}
+
+function resetForm() {
+  document.querySelector("#titre").value = "";
+  document.querySelector("#date").value = "";
+  document.querySelector("#priorite").value = "normal";
+  document.querySelector("#description").value = "";
+  let categories = document.querySelectorAll("input[type='checkbox']");
+
+  categories.forEach((element) => {
+    element.checked = false;
   });
 }
 
@@ -387,10 +432,6 @@ function afficherTaches(Taches) {
 document.querySelector(".btnModifier").addEventListener("click", function () {
   document.querySelector(".divModificationUser").classList.remove("hidden");
 });
-
-// document
-// .querySelector("#btnModifier")
-// .addEventListener("click", console.log('essaie bouton modifier'))
 
 document
   .querySelector(".btnRetourModificationUser")
@@ -470,8 +511,7 @@ function reussiteEchecModification(reponse) {
       $arraydecode["PrenomUser"],
       $arraydecode["EmailUser"]
     );
-
-    document.querySelector(".divModificationUser").classList.remove("hidden");
+    document.querySelector(".divModificationUser").classList.add("hidden");
 
     document.querySelector(".ModificationReussite").classList.remove("hidden");
     setTimeout(() => {
@@ -493,6 +533,8 @@ function suppressionUser() {
       console.log(data);
       if (data) {
         redirection("divToDoList", "divAccueil");
+        document.querySelector(".divModificationUser").classList.add("hidden");
+
         document
           .querySelector(".SuppressionReussite")
           .classList.remove("hidden");

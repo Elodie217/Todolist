@@ -52,7 +52,7 @@ class TacheManager
 
         $idUSer = $_SESSION['connecté'];
 
-        $sql = "SELECT * FROM tdl_tache WHERE Id_user = :Id_user";
+        $sql = "SELECT tdl_tache.Id_tache, tdl_tache.Titre, tdl_tache.Description, tdl_tache.Date, tdl_tache.Id_user, tdl_tache.Id_priorite, GROUP_CONCAT(tdl_appartenir.Id_categorie) AS Id_categorie FROM `tdl_tache` INNER JOIN tdl_appartenir on tdl_tache.Id_tache = tdl_appartenir.Id_tache WHERE Id_user = :Id_user GROUP BY tdl_tache.Id_tache";
 
         $statement = $this->pdo->prepare($sql);
         $statement->bindParam(':Id_user', $idUSer);

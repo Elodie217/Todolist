@@ -59,10 +59,22 @@
                         foreach ($allCategories as $categorie) {
                         ?>
                          <div class="px-2.5 w-40">
-                             <input type="checkbox" id="<?= $categorie->getId_categorie()  ?> " value="<?= $categorie->getId_categorie()  ?>" name="travail" />
-                             <label for="travail"><?= $categorie->getNom_categorie() ?></label>
+                             <input type="checkbox" id="<?= $categorie->getId_categorie()  ?> " value="<?= $categorie->getId_categorie()  ?>" name="checkbox" />
+                             <label for="checkbox" class="categorieCheckbox"><?php if ($categorie->getId_categorie() == 1) {
+                                                                                    echo $categorie->getNom_categorie() . '<i class="ml-2.5 fa-solid fa-briefcase"></i>';
+                                                                                } else if ($categorie->getId_categorie() == 2) {
+                                                                                    echo $categorie->getNom_categorie() . '<i class="ml-2.5 fa-solid fa-user"></i>';
+                                                                                } else if ($categorie->getId_categorie() == 3) {
+                                                                                    echo $categorie->getNom_categorie() . '<i class="ml-2.5 fa-solid fa-handshake-simple"></i>';
+                                                                                } else if ($categorie->getId_categorie() == 4) {
+                                                                                    echo $categorie->getNom_categorie() . '<i class="ml-2.5 fa-solid fa-house-user"></i>';
+                                                                                } else if ($categorie->getId_categorie() == 5) {
+                                                                                    echo $categorie->getNom_categorie() . '<i class="ml-2.5 fa-solid fa-dumbbell"></i>';
+                                                                                } ?></label>
                          </div>
-                     <?php }
+                     <?php
+
+                        }
                         ?>
                  </div>
 
