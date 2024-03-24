@@ -53,9 +53,32 @@ class UserManager
         $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
         $user = $statement->fetch();
 
-        if (password_verify($password, $user->getMot_de_passe())) {
-            return $statement->rowCount() == 1;
+        if ($user) {
+            if (password_verify($password, $user->getMot_de_passe())) {
+                return $statement->rowCount() == 1;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
+
+
+
+
+        // $sql = "SELECT * FROM tdl_user WHERE EMAIL = :email";
+
+        // $statement = $this->pdo->prepare($sql);
+        // $statement->bindParam(':email', $email);
+        // $statement->execute();
+        // $statement->setFetchMode(PDO::FETCH_CLASS, 'User\User');
+        // $user = $statement->fetch();
+
+        // if (password_verify($password, $user->getMot_de_passe())) {
+        //     return $statement->rowCount() == 1;
+        // }
+
+
     }
 
 

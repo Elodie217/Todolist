@@ -40,7 +40,7 @@
 
 
                 <div>
-                    <button type="submit" class="bouttonConnexion flex w-full justify-center rounded-md bg-[#FF9A99] hover:bg-[#FF9A99]/[.8] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
+                    <button type="submit" class="bouttonConnexion flex w-full justify-center rounded-md bg-[#FF9A99] hover:bg-[#FF9A99]/[.8] px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
                 </div>
                 <div class="InscriptionReussite text-lime-600 hidden my-2 text-center">Inscription réussite !</div>
 

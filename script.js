@@ -152,11 +152,12 @@ function connexion() {
 }
 
 function reussiteEchecConnexion(reponse) {
-  if (reponse == false) {
+  if (reponse == "FALSE") {
     document.querySelector(
       ".champVideConnexion"
     ).innerText = `Mot de passe ou email incorrecte.`;
   } else {
+    console.log(reponse);
     redirection("divConnexion", "divToDoList");
     recupererTaches();
     $arraydecode = JSON.parse(reponse);
@@ -170,6 +171,26 @@ function reussiteEchecConnexion(reponse) {
     // faire un innerHTML de reponse
   }
 }
+// function reussiteEchecConnexion(reponse) {
+//   console.log(reponse);
+//   if (reponse == false) {
+//     document.querySelector(
+//       ".champVideConnexion"
+//     ).innerText = `Mot de passe ou email incorrecte.`;
+//   } else {
+//     redirection("divConnexion", "divToDoList");
+//     recupererTaches();
+//     $arraydecode = JSON.parse(reponse);
+//     afficherTodo($arraydecode["NomUser"], $arraydecode["PrenomUser"]);
+//     afficherModification(
+//       $arraydecode["NomUser"],
+//       $arraydecode["PrenomUser"],
+//       $arraydecode["EmailUser"]
+//     );
+
+//     // faire un innerHTML de reponse
+//   }
+// }
 
 function afficherTodo(Nom, Prenom) {
   document.querySelector(".nomPrenom").innerHTML = Prenom + " " + Nom;

@@ -70,7 +70,7 @@
 
              <div class="erreurTodo text-red-700"></div>
 
-             <button type="submit" class="boutonAjouter flex w-full justify-center rounded-md bg-[#FC8C78] hover:bg-[#FFB59F] px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 text-red-700">Ajouter</button>
+             <button type="submit" class="boutonAjouter flex w-full justify-center rounded-md bg-[#FC8C78] hover:bg-[#FFB59F] px-3 py-2.5 text-sm font-semibold leading-6 text-black shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Ajouter</button>
 
              <div class="tacheCreer text-lime-600 hidden my-2 text-center">Tache créer !</div>
          </div>

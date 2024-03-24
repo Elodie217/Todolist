@@ -47,7 +47,7 @@ if (isset($_POST)) {
             $arrUser = array('NomUser' => $nomUser, 'PrenomUser' => $prenomUser, 'EmailUser' => $emailUser);
             echo json_encode($arrUser);
         } else {
-            echo FALSE;
+            echo 'FALSE';
         }
     } else {
         echo 'Merci de remplir tous les champs.';
