@@ -29,7 +29,6 @@ if (isset($_SESSION['connecté'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Madimi+One&display=swap" rel="stylesheet">
 </head>
-<!-- font-family: "Dancing Script", cursive; -->
 
 <body class="text-lg relative bg-[url('./asset/media/bureau.jpg')] bg-cover bg-fixed bg-center relative" style="font-family: sans-serif ;">
 

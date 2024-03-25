@@ -79,16 +79,13 @@ function inscription() {
 }
 
 function reussiteEchecInscription(reponse) {
-  console.log(reponse);
   if (reponse == 1) {
-    console.log("dans le if");
     redirection("divInscription", "divConnexion");
     document.querySelector(".InscriptionReussite").classList.remove("hidden");
     setTimeout(() => {
       document.querySelector(".InscriptionReussite").classList.add("hidden");
     }, 4000);
   } else {
-    console.log("dans le else");
     document.querySelector(".champVideInscription").innerText =
       "Email déjà utilisé";
   }
@@ -158,7 +155,6 @@ function reussiteEchecConnexion(reponse) {
       ".champVideConnexion"
     ).innerText = `Mot de passe ou email incorrecte.`;
   } else {
-    console.log(reponse);
     redirection("divConnexion", "divToDoList");
     recupererTaches();
     $arraydecode = JSON.parse(reponse);
@@ -169,44 +165,14 @@ function reussiteEchecConnexion(reponse) {
       $arraydecode["EmailUser"]
     );
     afficherModificationTache();
-
-    // faire un innerHTML de reponse
   }
 }
-// function reussiteEchecConnexion(reponse) {
-//   console.log(reponse);
-//   if (reponse == false) {
-//     document.querySelector(
-//       ".champVideConnexion"
-//     ).innerText = `Mot de passe ou email incorrecte.`;
-//   } else {
-//     redirection("divConnexion", "divToDoList");
-//     recupererTaches();
-//     $arraydecode = JSON.parse(reponse);
-//     afficherTodo($arraydecode["NomUser"], $arraydecode["PrenomUser"]);
-//     afficherModification(
-//       $arraydecode["NomUser"],
-//       $arraydecode["PrenomUser"],
-//       $arraydecode["EmailUser"]
-//     );
-
-//     // faire un innerHTML de reponse
-//   }
-// }
 
 function afficherTodo(Nom, Prenom) {
   document.querySelector(".nomPrenom").innerHTML = Prenom + " " + Nom;
 
   recupererTaches();
 }
-
-// let iconeTravail = document.querySelector(".fa-briefcase");
-
-// iconeTravail.forEach((element) => {
-//   element.addEventListener("mouseover", function () {
-//     console.log("je suis au dessus");
-//   });
-// });
 
 function afficherModification(Nom, Prenom, Email) {
   document.querySelector(".formModification").innerHTML =
@@ -506,11 +472,8 @@ function reussiteEchecModification(reponse) {
     document.querySelector(".champVideInscription").innerText =
       "Email déjà utilisé";
   } else {
-    console.log(JSON.parse(reponse));
     $arraydecode = JSON.parse(reponse);
-    // $arraydecode = reponse;
 
-    console.log($arraydecode["NomUser"]);
     afficherTodo($arraydecode["NomUser"], $arraydecode["PrenomUser"]);
     afficherModification(
       $arraydecode["NomUser"],
@@ -567,11 +530,8 @@ function retourTache() {
 let recuperationID = "";
 
 function validerTacheMessage(idTache) {
-  // document.querySelector("body").classList.add("overflow-y-hidden");
   document.querySelector(".divValiderTache").classList.remove("hidden");
   document.querySelector(".flou").classList.remove("hidden");
-  // let btnValidationTache = document.querySelector(".btnValidationTache");
-  // let idTache = btnValidationTache.getAttribute("id");
 
   recuperationID = idTache;
 }
@@ -592,7 +552,6 @@ function validerTache() {
   fetch("./src/supprimerTache.php", params)
     .then((res) => res.text())
     .then((data) => {
-      console.log(data);
       if (data) {
         retourTache();
         recupererTaches();
@@ -684,11 +643,8 @@ function reussiteEchecModification(reponse) {
     document.querySelector(".champVideInscription").innerText =
       "Email déjà utilisé";
   } else {
-    console.log(JSON.parse(reponse));
     $arraydecode = JSON.parse(reponse);
-    // $arraydecode = reponse;
 
-    console.log($arraydecode["NomUser"]);
     afficherTodo($arraydecode["NomUser"], $arraydecode["PrenomUser"]);
     afficherModification(
       $arraydecode["NomUser"],
@@ -839,12 +795,9 @@ function suppressionAppartenir(ideTache) {
   fetch("./src/supprimerAppartenir.php", params)
     .then((res) => res.text())
     .then((data) => {
-      console.log(data);
       if (data) {
-        console.log("lien supprimer");
         modificationlienTacheCategorie(ideTache);
       } else {
-        console.log("erreur");
       }
     });
 }

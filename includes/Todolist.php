@@ -90,57 +90,7 @@
      </section>
 
 
-     <section class="listTache flex flex-wrap mr-[3%]">
-         <!-- <div class="w-2/5 m-[5%] shadow-lg rounded-2xl relative bg-[#DFE0DF]/[.6]">
-                        <div class="w-full bg-[#ff0000] h-3.5 rounded-t-2xl"></div>
-
-                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-
-                        <div class="px-2.5 py-2.5">
-                            <h3 class="text-2xl text-center my-3 font-semibold">Titre tache</h3>
-                            <div class="flex justify-between">
-                                <p>25/02/2024</p>
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
-                            <div class="my-2.5">
-                                <p>Description</p>
-                                <p>Lorem ipsum dolor sit amet consectetur ...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-2/5 m-[5%] shadow-xl rounded-2xl relative bg-[#DFE0DF]/[.6]">
-                        <div class="w-full bg-[#ff4f00] h-3.5 rounded-t-2xl"></div>
-                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-                        <div class="px-2.5 py-2.5">
-                            <h3 class="text-2xl text-center my-3 font-semibold">Titre tache</h3>
-                            <div class="flex justify-between">
-                                <p>25/02/2024</p>
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
-                            <div class="my-2.5">
-                                <p>Description</p>
-                                <p>Lorem ipsum dolor sit amet consectetur ...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-2/5 m-[5%] shadow-2xl rounded-2xl relative bg-[#DFE0DF]/[.6]">
-                        <div class="w-full bg-[#1eff00] h-3.5 rounded-t-2xl "></div>
-                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-                        <div class="px-2.5 py-2.5">
-                            <h3 class="text-2xl text-center my-3 font-semibold">Titre tache</h3>
-                            <div class="flex justify-between">
-                                <p>25/02/2024</p>
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
-                            <div class="my-2.5">
-                                <p>Description</p>
-                                <p>Lorem ipsum dolor sit amet consectetur ...</p>
-                            </div>
-                        </div>
-                    </div> -->
+     <section class="listTache flex flex-wrap">
 
      </section>
  </main>
