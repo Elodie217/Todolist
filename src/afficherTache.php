@@ -20,6 +20,4 @@ foreach ($taches as $tache) {
     array_push($tacheArray, $tache->getObjectToArray());
 }
 
-// echo $tacheManager->getTachebyIdUser();
 echo json_encode($tacheArray);
-// echo json_encode($tacheManager->getTachebyIdUser());

@@ -13,7 +13,7 @@
         $dbConnexion = new DbConnexion();
         $appartenirManager = new AppartenirManager($dbConnexion);
 
-        var_dump($tache);
+
 
         if ($appartenirManager->deleteAppartenir($tache['idTache'])) {
             echo true;

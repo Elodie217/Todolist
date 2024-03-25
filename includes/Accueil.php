@@ -3,7 +3,6 @@
         <h1 class="text-center text-5xl py-5 " style="font-family: 'Madimi One', sans-serif ;">To Do list</h1>
     </header>
     <div class="flex mt-16 flex-col justify-center px-6  lg:px-8  ">
-        <!-- <h2 class="text-center text-5xl pb-5 -mt-3" style="font-family: 'Madimi One', sans-serif ;">To Do list</h2> -->
 
         <div class="w-10/12 shadow-lg rounded-2xl mx-auto p-2.5 bg-[#ffffff99]">
             <p class="text-center my-2.5 text-2xl">Bienvenue !</p>
