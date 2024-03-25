@@ -80,7 +80,7 @@ function inscription() {
 
 function reussiteEchecInscription(reponse) {
   console.log(reponse);
-  if (reponse) {
+  if (reponse == 1) {
     console.log("dans le if");
     redirection("divInscription", "divConnexion");
     document.querySelector(".InscriptionReussite").classList.remove("hidden");
@@ -89,7 +89,8 @@ function reussiteEchecInscription(reponse) {
     }, 4000);
   } else {
     console.log("dans le else");
-    document.querySelector(".champVideInscription").innerText = reponse;
+    document.querySelector(".champVideInscription").innerText =
+      "Email déjà utilisé";
   }
 }
 
@@ -167,6 +168,7 @@ function reussiteEchecConnexion(reponse) {
       $arraydecode["PrenomUser"],
       $arraydecode["EmailUser"]
     );
+    afficherModificationTache();
 
     // faire un innerHTML de reponse
   }
@@ -267,7 +269,7 @@ document
     } else {
       document.querySelector(
         ".erreurTodo"
-      ).innerText = `Merci de remplir Le titre et la date.`;
+      ).innerText = `Merci de remplir le titre, la date et la priorité.`;
       evenement.preventDefault();
     }
   });
@@ -354,12 +356,14 @@ function afficherTaches(Taches) {
                         <div class='divCouleurPriorite` +
       user["Id_tache"] +
       ` w-full h-3.5 rounded-t-2xl'></div>
-                        <button class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-pen-to-square text-black'></i></button>
+                        <button class='btnModificationTache absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer' onclick='divModification(` +
+      user["Id_tache"] +
+      `)'><i class='fa-solid fa-pen-to-square text-black hover:scale-125 duration-300'></i></button>
                         <button class='btnValidationTache absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer' onclick='validerTacheMessage(` +
       user["Id_tache"] +
       `)' id="` +
       user["Id_tache"] +
-      `"><i class="fa-regular fa-square-check"></i>  </button>
+      `"><i class="fa-regular fa-square-check hover:scale-125 duration-300"></i>  </button>
                         <div class='px-2.5 py-2.5'>
                             <h3 class='text-2xl text-center my-3.5 font-semibold'>` +
       user["Titre"] +
@@ -397,7 +401,7 @@ function afficherTaches(Taches) {
       ".iconeCategorie" + user["Id_tache"]
     );
 
-    const idcat = user["Id_categorie"].toString();
+    let idcat = user["Id_categorie"].toString();
     let arrayCategorie = idcat.split(",");
 
     arrayCategorie.forEach((element) => {
@@ -431,12 +435,14 @@ function resetForm() {
 /////////////////////Modification User/////////////////////
 document.querySelector(".btnModifier").addEventListener("click", function () {
   document.querySelector(".divModificationUser").classList.remove("hidden");
+  document.querySelector(".flou").classList.remove("hidden");
 });
 
 document
   .querySelector(".btnRetourModificationUser")
   .addEventListener("click", function () {
     document.querySelector(".divModificationUser").classList.add("hidden");
+    document.querySelector(".flou").classList.add("hidden");
   });
 
 document
@@ -490,7 +496,7 @@ function modification() {
     body: JSON.stringify(userModification),
   };
 
-  fetch("./src/ModificationUser.php", params)
+  fetch("./src/modificationUser.php", params)
     .then((res) => res.text())
     .then((data) => reussiteEchecModification(data));
 }
@@ -500,11 +506,11 @@ function reussiteEchecModification(reponse) {
     document.querySelector(".champVideInscription").innerText =
       "Email déjà utilisé";
   } else {
-    console.log(reponse);
-    // $arraydecode = JSON.parse(reponse);
-    $arraydecode = reponse;
+    console.log(JSON.parse(reponse));
+    $arraydecode = JSON.parse(reponse);
+    // $arraydecode = reponse;
 
-    console.log(reponse["NomUser"]);
+    console.log($arraydecode["NomUser"]);
     afficherTodo($arraydecode["NomUser"], $arraydecode["PrenomUser"]);
     afficherModification(
       $arraydecode["NomUser"],
@@ -512,6 +518,8 @@ function reussiteEchecModification(reponse) {
       $arraydecode["EmailUser"]
     );
     document.querySelector(".divModificationUser").classList.add("hidden");
+
+    document.querySelector(".flou").classList.add("hidden");
 
     document.querySelector(".ModificationReussite").classList.remove("hidden");
     setTimeout(() => {
@@ -534,7 +542,7 @@ function suppressionUser() {
       if (data) {
         redirection("divToDoList", "divAccueil");
         document.querySelector(".divModificationUser").classList.add("hidden");
-
+        retourTache();
         document
           .querySelector(".SuppressionReussite")
           .classList.remove("hidden");
@@ -553,7 +561,7 @@ function suppressionUser() {
 function retourTache() {
   document.querySelector(".divValiderTache").classList.add("hidden");
   document.querySelector(".flou").classList.add("hidden");
-  // document.querySelector("body").classList.remove("overflow-y-hidden");
+  document.querySelector(".divModificationTache").classList.add("hidden");
 }
 
 let recuperationID = "";
@@ -597,6 +605,284 @@ function validerTache() {
         }, 4000);
       } else {
         console.log("ça fonctionne pas !");
+      }
+    });
+}
+
+/////////////////////Modification User/////////////////////
+
+document.querySelector(".btnModifier").addEventListener("click", function () {
+  document.querySelector(".divModificationUser").classList.remove("hidden");
+  document.querySelector(".flou").classList.remove("hidden");
+});
+
+document
+  .querySelector(".btnRetourModificationUser")
+  .addEventListener("click", function () {
+    document.querySelector(".divModificationUser").classList.add("hidden");
+    document.querySelector(".flou").classList.add("hidden");
+  });
+
+document
+  .querySelector(".boutonModification")
+  .addEventListener("click", function (evenement) {
+    let nomModification = document.querySelector("#nomModification").value;
+    let prenomModification = document.querySelector(
+      "#prenomModification"
+    ).value;
+    let emailModification = document.querySelector("#emailModification").value;
+    if (
+      nomModification !== "" &&
+      prenomModification !== "" &&
+      emailModification !== ""
+    ) {
+      document.querySelector(".champVideModification").innerText = "";
+      if (checkEmail(emailModification) == true) {
+        document.querySelector(".emailIncorrectModification").innerText = "";
+
+        modification();
+      } else {
+        document.querySelector(
+          ".emailIncorrectModification"
+        ).innerText = `Merci de mettre un email valide.`;
+        evenement.preventDefault();
+      }
+    } else {
+      document.querySelector(
+        ".champVideModification"
+      ).innerText = `Merci de remplir tous les champs.`;
+      evenement.preventDefault();
+    }
+  });
+
+function modification() {
+  let nomModification = document.querySelector("#nomModification").value;
+  let prenomModification = document.querySelector("#prenomModification").value;
+  let emailModification = document.querySelector("#emailModification").value;
+
+  let userModification = {
+    nomModification: nomModification,
+    prenomModification: prenomModification,
+    emailModification: emailModification,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(userModification),
+  };
+
+  fetch("./src/modificationUser.php", params)
+    .then((res) => res.text())
+    .then((data) => reussiteEchecModification(data));
+}
+
+function reussiteEchecModification(reponse) {
+  if (reponse == false) {
+    document.querySelector(".champVideInscription").innerText =
+      "Email déjà utilisé";
+  } else {
+    console.log(JSON.parse(reponse));
+    $arraydecode = JSON.parse(reponse);
+    // $arraydecode = reponse;
+
+    console.log($arraydecode["NomUser"]);
+    afficherTodo($arraydecode["NomUser"], $arraydecode["PrenomUser"]);
+    afficherModification(
+      $arraydecode["NomUser"],
+      $arraydecode["PrenomUser"],
+      $arraydecode["EmailUser"]
+    );
+    document.querySelector(".divModificationUser").classList.add("hidden");
+
+    document.querySelector(".flou").classList.add("hidden");
+
+    document.querySelector(".ModificationReussite").classList.remove("hidden");
+    setTimeout(() => {
+      document.querySelector(".ModificationReussite").classList.add("hidden");
+    }, 4000);
+  }
+}
+
+/////////////////////Modifier Tache/////////////////////
+
+function divModification(idTache) {
+  document.querySelector(".divModificationTache").classList.remove("hidden");
+  document.querySelector(".flou").classList.remove("hidden");
+  // afficherModificationTache();
+  recupererTachesByID(idTache);
+}
+
+let idTacheAModifier = "";
+
+function recupererTachesByID(id) {
+  let recupererTachesByID = {
+    IdTache: id,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(recupererTachesByID),
+  };
+
+  fetch("./src/tacheById.php", params)
+    .then((res) => res.json())
+    .then((data) => afficherValueModificationTache(data));
+}
+
+function afficherValueModificationTache(infoTache) {
+  document.querySelector("#titreModification").value = infoTache["TitreTache"];
+  document.querySelector("#dateModification").value = infoTache["DateTache"];
+  document.querySelector("#descriptionModification").value =
+    infoTache["DescriptionTache"];
+
+  if (infoTache["IdPrioriteTache"] == "1") {
+    document.querySelector("#prioriteModification").value = "normal";
+  } else if (infoTache["IdPrioriteTache"] == "2") {
+    document.querySelector("#prioriteModification").value = "important";
+  } else if (infoTache["IdPrioriteTache"] == "3") {
+    document.querySelector("#prioriteModification").value = "urgent";
+  }
+
+  let idCategorie = infoTache["IdCategorieTache"].toString();
+  let arrayCategorie = idCategorie.split(",");
+
+  document.querySelector("#checkmodif1").checked = false;
+  document.querySelector("#checkmodif2").checked = false;
+  document.querySelector("#checkmodif3").checked = false;
+  document.querySelector("#checkmodif4").checked = false;
+  document.querySelector("#checkmodif5").checked = false;
+
+  arrayCategorie.forEach((element) => {
+    if (element == 1) {
+      document.querySelector("#checkmodif1").checked = true;
+    } else if (element == 2) {
+      document.querySelector("#checkmodif2").checked = true;
+    } else if (element == 3) {
+      document.querySelector("#checkmodif3").checked = true;
+    } else if (element == 4) {
+      document.querySelector("#checkmodif4").checked = true;
+    } else if (element == 5) {
+      document.querySelector("#checkmodif5").checked = true;
+    }
+  });
+
+  idTacheAModifier = infoTache["IdTache"];
+}
+document
+  .querySelector(".boutonTacheModification")
+  .addEventListener("click", function (evenement) {
+    let titre = document.querySelector("#titreModification").value;
+    let date = document.querySelector("#dateModification").value;
+    let priorite = document.querySelector("#prioriteModification").value;
+
+    if (titre !== "" && date !== "" && priorite !== "") {
+      document.querySelector(".erreurTodoModificer").innerText = "";
+      modifierTache(idTacheAModifier);
+    } else {
+      document.querySelector(
+        ".erreurTodoModificer"
+      ).innerText = `Merci de remplir le titre, la date et la priorité.`;
+      evenement.preventDefault();
+    }
+  });
+
+async function modifierTache(ideTache) {
+  let titre = document.querySelector("#titreModification").value;
+  let date = document.querySelector("#dateModification").value;
+  let priorite = document.querySelector("#prioriteModification").value;
+  let description = document.querySelector("#descriptionModification").value;
+
+  let modifierTache = {
+    id: ideTache,
+    titre: titre,
+    date: date,
+    priorite: priorite,
+    description: description,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(modifierTache),
+  };
+
+  fetch("./src/modificationTache.php", params)
+    .then((res) => res.text())
+    .then((data) => {
+      console.log(data);
+      suppressionAppartenir(ideTache);
+    });
+}
+
+// function
+function suppressionAppartenir(ideTache) {
+  let supprimerLien = {
+    idTache: ideTache,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(supprimerLien),
+  };
+
+  fetch("./src/supprimerAppartenir.php", params)
+    .then((res) => res.text())
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        console.log("lien supprimer");
+        modificationlienTacheCategorie(ideTache);
+      } else {
+        console.log("erreur");
+      }
+    });
+}
+
+function modificationlienTacheCategorie(idTache) {
+  let categories = document.querySelectorAll(".ckeckboxModification");
+
+  let categorieTache = [];
+
+  categories.forEach((element) => {
+    if (element.checked == true) {
+      categorieTache += element.value;
+    }
+  });
+
+  let creerLien = {
+    idTache: idTache,
+    categorieTache: categorieTache,
+  };
+
+  let params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(creerLien),
+  };
+
+  fetch("./src/lienTacheCategorie.php", params)
+    .then((res) => res.text())
+    .then((data) => {
+      if (data) {
+        retourTache();
+        recupererTaches();
+        document.querySelector(".tacheModifiee").classList.remove("hidden");
+        setTimeout(() => {
+          document.querySelector(".tacheModifiee").classList.add("hidden");
+        }, 4000);
       }
     });
 }

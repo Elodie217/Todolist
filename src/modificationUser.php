@@ -10,7 +10,6 @@
     if (isset($_POST)) {
         $data = file_get_contents("php://input");
         $userModification = (json_decode($data, true));
-        var_dump($userModification);
 
         if (isset($userModification['nomModification']) && !empty($userModification['nomModification']) && isset($userModification['prenomModification']) && !empty($userModification['prenomModification']) && isset($userModification['emailModification']) && !empty($userModification['emailModification'])) {
 

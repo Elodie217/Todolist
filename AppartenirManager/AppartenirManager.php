@@ -4,6 +4,7 @@ namespace AppartenirManager;
 
 use Appartenir\Appartenir;
 use DbConnexion\DbConnexion;
+use PDOException;
 
 class AppartenirManager
 {
@@ -28,5 +29,19 @@ class AppartenirManager
         ]);
 
         return $retour;
+    }
+
+    public function deleteAppartenir($id)
+    {
+        try {
+            $sql = "DELETE FROM tdl_appartenir WHERE id_tache = :ID;";
+
+            $statement = $this->pdo->prepare($sql);
+
+            return $statement->execute([':ID' => $id]);
+        } catch (PDOException $error) {
+            echo "Erreur de suppression : " . $error->getMessage();
+            return FALSE;
+        }
     }
 }

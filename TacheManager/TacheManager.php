@@ -64,6 +64,19 @@ class TacheManager
         return $retour;
     }
 
+    public function getTachebyId($idTache)
+    {
+        $sql = "SELECT tdl_tache.Id_tache, tdl_tache.Titre, tdl_tache.Description, tdl_tache.Date, tdl_tache.Id_user, tdl_tache.Id_priorite, GROUP_CONCAT(tdl_appartenir.Id_categorie) AS Id_categorie FROM `tdl_tache` INNER JOIN tdl_appartenir on tdl_tache.Id_tache = tdl_appartenir.Id_tache WHERE tdl_tache.Id_tache = :Id_tache GROUP BY tdl_tache.Id_tache";
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(':Id_tache', $idTache);
+
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_CLASS, Tache::class);
+        $retour = $statement->fetch();
+
+        return $retour;
+    }
 
 
 
@@ -92,9 +105,8 @@ class TacheManager
               Titre = :Titre,
               Description =  :Description,
               Date = :Date,
-              Id_user = :Id_user,
-              Id_priorite = :Id_priorite,
-            WHERE Id_tache = :Id_tache";
+              Id_priorite = :Id_priorite
+            WHERE tdl_tache.Id_tache = :Id_tache";
 
         $statement = $this->pdo->prepare($sql);
 
@@ -103,7 +115,6 @@ class TacheManager
             ':Titre' => $tache->getTitre(),
             ':Description' => $tache->getDescription(),
             ':Date' => $tache->getDate(),
-            ':Id_user' => $tache->getId_user(),
             ':Id_priorite' => $tache->getId_priorite(),
         ]);
 

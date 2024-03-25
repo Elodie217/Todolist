@@ -31,7 +31,7 @@ if (isset($_SESSION['connecté'])) {
 </head>
 <!-- font-family: "Dancing Script", cursive; -->
 
-<body class="text-lg relative bg-[url('./asset/media/bureau.jpg')] bg-cover bg-fixed bg-center relative " style="font-family: sans-serif ;">
+<body class="text-lg relative bg-[url('./asset/media/bureau.jpg')] bg-cover bg-fixed bg-center relative" style="font-family: sans-serif ;">
 
 
     <div class="divAccueil <?php if (isset($_SESSION['connecté'])) {
@@ -65,6 +65,8 @@ if (isset($_SESSION['connecté'])) {
     <div class="ValidationReussite absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Tache terminée !</div>
 
     <div class="SuppressionReussite absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Compte supprimé</div>
+
+    <div class="tacheModifiee absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Tache modifiée !</div>
 
 
     <div class="divValiderTache absolute z-20 mx-[500px] w-96 top-[40vh] border-2 bg-[#DFE0DF]/[.8] border-black-500 rounded-2xl py-2 text-center p-4 hidden">
