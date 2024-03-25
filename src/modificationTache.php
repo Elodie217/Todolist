@@ -35,7 +35,6 @@ if (isset($_POST)) {
 
         $descriptionTache = htmlspecialchars($tache['description']);
 
-        $idUtilisateur = ($_SESSION['connecté']);
 
         if ($tache['priorite'] == 'normal') {
             $prioriteTache = 1;
@@ -45,20 +44,22 @@ if (isset($_POST)) {
             $prioriteTache = 3;
         }
 
+        $id = $tache['id'];
+
         // Création tache
 
         $infoTache = array(
+            'Id_tache' => $id,
             "Titre" => $titreTache,
             "Description" => $descriptionTache,
             "Date" => $dateTache,
-            "Id_user" => $idUtilisateur,
             'Id_priorite' => $prioriteTache
         );
 
-        $newTache = new Tache($infoTache);
+        $TacheModifiee = new Tache($infoTache);
 
-        $creerTache = $tacheManager->CreerTache($newTache);
-        echo $creerTache;
+        $ModifierTache = $tacheManager->updateTache($TacheModifiee);
+        echo $ModifierTache;
     } else {
         echo 'Merci de remplir tous les champs.';
     }

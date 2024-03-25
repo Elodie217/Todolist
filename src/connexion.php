@@ -33,14 +33,21 @@ if (isset($_POST)) {
 
 
         if ($userManager->login($email, $user["passwordConnexion"])) {
-            echo "success";
             $DbConnexion = new DbConnexion();
             $UserManager = new UserManager($DbConnexion);
             $utilisateur = $UserManager->getUserbyEmail($email);
             $idUser = $utilisateur->getId_user();
             $_SESSION['connecté'] = $idUser;
+
+            $nomUser = $utilisateur->getNom();
+            $prenomUser = $utilisateur->getPrenom();
+            $emailUser = $utilisateur->getEmail();
+
+
+            $arrUser = array('NomUser' => $nomUser, 'PrenomUser' => $prenomUser, 'EmailUser' => $emailUser);
+            echo json_encode($arrUser);
         } else {
-            echo "Erreur de connexion";
+            echo 'FALSE';
         }
     } else {
         echo 'Merci de remplir tous les champs.';

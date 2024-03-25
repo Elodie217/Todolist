@@ -13,7 +13,9 @@ $tacheManager = new TacheManager($dbConnexion);
 
 
 $taches = $tacheManager->getTachebyIdUser();
+
 $tacheArray = [];
+
 foreach ($taches as $tache) {
     array_push($tacheArray, $tache->getObjectToArray());
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use CategorieManager\CategorieManager;
 use DbConnexion\DbConnexion;
@@ -8,7 +9,6 @@ use Tache\Tache;
 
 require_once __DIR__ . './autoload.php';
 
-session_start();
 
 if (isset($_SESSION['connecté'])) {
     $DbConnexion = new DbConnexion();
@@ -31,9 +31,12 @@ if (isset($_SESSION['connecté'])) {
 </head>
 <!-- font-family: "Dancing Script", cursive; -->
 
-<body class="text-lg relative bg-[url('./asset/media/bureau')] bg-cover bg-fixed bg-center
-" style="font-family: sans-serif ;">
-    <div class="divAccueil "><?php include 'includes/Accueil.php' ?></div>
+<body class="text-lg relative bg-[url('./asset/media/bureau.jpg')] bg-cover bg-fixed bg-center relative" style="font-family: sans-serif ;">
+
+
+    <div class="divAccueil <?php if (isset($_SESSION['connecté'])) {
+                                echo 'hidden';
+                            }; ?> "><?php include 'includes/Accueil.php' ?></div>
 
 
     <div class="divInscription hidden">
@@ -47,164 +50,47 @@ if (isset($_SESSION['connecté'])) {
     </div>
 
 
-
-    <section class="divToDoList hidden ">
-        <?php
-
-
-
-
-        ?>
-        <div></div>
-        <header class="bg-[#FFF8E8]/[.9] pt-4">
-            <a href="./deconnexion.php" class="px-2.5 py-2 bg-[#DFE0DF] rounded-2xl ml-[85%] shadow-lg">Déconnexion</a>
-            <h1 class="text-center text-5xl pb-5 -mt-4" style="font-family: 'Madimi One', sans-serif ;">To Do list</h1>
-        </header>
-
-
-        <?php
-        if (isset($_SESSION['connecté'])) {
-
-            // $tacheManager = new TacheManager($DbConnexion);
-            // $taches = $tacheManager->getTachebyIdUser();
-            // $tacheArray = [];
-            // foreach ($taches as $tache) {
-            //     array_push($tacheArray, $tache->getObjectToArray());
-            // }
-            // var_dump('essaie', $tacheArray);
-
-
-
-        ?>
-            <main class="flex">
-                <section class="menuGauche min-w-56 px-2.5 py-2.5 bg-[#FFF8E8]/[.9]">
-                    <p class="text-right mr-2 font-semibold mb-7 text-2xl capitalize"> <?= $utilisateur->getPrenom() ?> <?= $utilisateur->getNom() ?></p>
-                    <button class=" btnModifier text-right ml-6">Modifier mon profil</button>
-                </section>
-
-                <section class="formulaireTodo w-fit max-w-[430px] min-w-[400px] p-3.5 shadow-lg m-9 rounded-2xl h-fit bg-[#DFE0DF]/[.6]">
-
-                    <h2 class="text-2xl text-center font-semibold">Nouvelle tache</h2>
-                    <div>
-                        <div class="flex flex-col py-2.5">
-                            <label for="titre">Titre</label>
-                            <input type="text" name="titre" id="titre" class="border-2 border-gray-400 border-solid rounded-lg indent-2" required>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex flex-col py-2.5">
-                                <label for="date">Date</label>
-                                <input type="date" name="date" id="date" class="border-2 border-gray-400 border-solid rounded-lg indent-2" required>
-                            </div>
-                            <div class="flex flex-col py-2.5">
-                                <label for="priorite">Priorité</label>
-                                <select id="priorite" name="priorite" type="text" required class="border-2 border-gray-400 border-solid rounded-lg indent-2">
-                                    <option class='' value="normal">Normal</option>
-                                    <option class='' value="important">Important</option>
-                                    <option class='' value="urgent">Urgent</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="flex flex-col py-2.5">
-                            <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="border-2 border-gray-400 border-solid rounded-lg indent-2" required>
-                        </div>
-                        <div class="flex flex-col justify-between py-2.5">
-                            <legend>Catégories</legend>
-                            <div class="categorie flex flex-wrap">
-                                <?php
-                                $CategoriesManager = new CategorieManager($DbConnexion);
-                                $allCategories = $CategoriesManager->getAllCategories();
-
-                                foreach ($allCategories as $categorie) {
-                                ?>
-                                    <div class="px-2.5 w-40">
-                                        <input type="checkbox" id="<?= $categorie->getId_categorie()  ?> " value="<?= $categorie->getId_categorie()  ?>" name="travail" />
-                                        <label for="travail"><?= $categorie->getNom_categorie() ?></label>
-                                    </div>
-                                <?php }
-                                ?>
-                            </div>
-
-                        </div>
-
-                        <div class="erreurTodo text-red-700"></div>
-
-                        <button type="submit" class="boutonAjouter flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 text-red-700">Ajouter</button>
-
-                        <div class="tacheCreer text-lime-600 hidden my-2 text-center">Tache créer !</div>
-                    </div>
-                </section>
-
-
-                <section class="listTache flex flex-wrap mr-[3%]">
-                    <!-- <div class="w-2/5 m-[5%] shadow-lg rounded-2xl relative bg-[#DFE0DF]/[.6]">
-                        <div class="w-full bg-[#ff0000] h-3.5 rounded-t-2xl"></div>
-
-                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-
-                        <div class="px-2.5 py-2.5">
-                            <h3 class="text-2xl text-center my-3 font-semibold">Titre tache</h3>
-                            <div class="flex justify-between">
-                                <p>25/02/2024</p>
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
-                            <div class="my-2.5">
-                                <p>Description</p>
-                                <p>Lorem ipsum dolor sit amet consectetur ...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-2/5 m-[5%] shadow-xl rounded-2xl relative bg-[#DFE0DF]/[.6]">
-                        <div class="w-full bg-[#ff4f00] h-3.5 rounded-t-2xl"></div>
-                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-                        <div class="px-2.5 py-2.5">
-                            <h3 class="text-2xl text-center my-3 font-semibold">Titre tache</h3>
-                            <div class="flex justify-between">
-                                <p>25/02/2024</p>
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
-                            <div class="my-2.5">
-                                <p>Description</p>
-                                <p>Lorem ipsum dolor sit amet consectetur ...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-2/5 m-[5%] shadow-2xl rounded-2xl relative bg-[#DFE0DF]/[.6]">
-                        <div class="w-full bg-[#1eff00] h-3.5 rounded-t-2xl "></div>
-                        <a href='' class='absolute top-5 right-3  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'><i class='fa-solid fa-trash text-black'></i></a>
-                        <a href='' class='absolute top-5 right-10  w-7 h-7 flex items-center flex-col justify-center rounded-xl cursor-pointer'> <i class='fa-solid fa-pen-to-square text-black'></i> </a>
-                        <div class="px-2.5 py-2.5">
-                            <h3 class="text-2xl text-center my-3 font-semibold">Titre tache</h3>
-                            <div class="flex justify-between">
-                                <p>25/02/2024</p>
-                                <i class="fa-solid fa-dumbbell"></i>
-                            </div>
-                            <div class="my-2.5">
-                                <p>Description</p>
-                                <p>Lorem ipsum dolor sit amet consectetur ...</p>
-                            </div>
-                        </div>
-                    </div> -->
-
-                </section>
-            </main>
-
-            <div class="divModificationUser hidden">
-                <?php
-                include 'includes/ModificationUser.php';
-                ?>
-            </div>
-
-
-        <?php }
-        ?>
+    <section class="divToDoList <?php if (isset($_SESSION['connecté'])) {
+                                    echo '';
+                                } else {
+                                    echo 'hidden';
+                                }; ?>  ">
+        <?php include __DIR__ . "/includes/Todolist.php"; ?>
     </section>
+
+
+
+    <div class="ModificationReussite absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Modification réussite !</div>
+
+    <div class="ValidationReussite absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Tache terminée !</div>
+
+    <div class="SuppressionReussite absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Compte supprimé</div>
+
+    <div class="tacheModifiee absolute z-20 mx-[530px] w-72 top-[50vh] bg-lime-200 border-2 border-lime-500 rounded-2xl py-2 text-center text-xl hidden">Tache modifiée !</div>
+
+
+    <div class="divValiderTache absolute z-20 mx-[500px] w-96 top-[40vh] border-2 bg-[#DFE0DF]/[.8] border-black-500 rounded-2xl py-2 text-center p-4 hidden">
+        <p class="mb-2 font-semibold text-xl">Voulez-vous marquer cette tache commme validée ?</p>
+        <div class="divBoutton"> <button class="bg-[#FFF8E8]/[.9] p-2 m-2 rounded-xl text-xl" onclick="validerTache()">Oui</button> <button class=" bg-[#FFF8E8]/[.9] p-2 m-2 rounded-xl text-xl" onclick="retourTache()">Non</button> </div>
+    </div>
+
+    <div class="flou fixed w-full h-full top-0 backdrop-blur-sm hidden"></div>
 
 </body>
 <script src="script.js"></script>
 
+<?php if (isset($_SESSION['connecté'])) {
+    $NomUser = $utilisateur->getNom();
+    $PrenomUser = $utilisateur->getPrenom();
+    $EmailUser = $utilisateur->getEmail();
+?>
+    <script>
+        afficherTodo('<?= $NomUser ?>', '<?= $PrenomUser ?>');
+        afficherModification('<?= $NomUser ?>', '<?= $PrenomUser ?>', '<?= $EmailUser ?>');
+        recupererTaches();
+    </script>
+<?php
+} ?>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script src="https://kit.fontawesome.com/97cd5da9a0.js" crossorigin="anonymous"></script>
